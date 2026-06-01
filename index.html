@@ -1,108 +1,144 @@
 <!doctype html>
 <html lang="ca">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Reserva seients · Graduació Aixovall 2026</title>
-  <link rel="stylesheet" href="assets/css/styles.css" />
-</head>
-<body>
-  <header class="app-header">
-    <div>
-      <p class="eyebrow">Centre de Formació Professional d’Aixovall</p>
-      <h1>Reserva de seients</h1>
-    </div>
-    <span class="badge">Graduació 2026</span>
-  </header>
-
-  <main class="app-shell">
-    <section class="step is-active" id="step-welcome" aria-labelledby="welcome-title">
-      <div class="hero-card">
-        <p class="eyebrow">Benvinguda</p>
-        <h2 id="welcome-title">Tria fins a 4 seients per a la graduació</h2>
-        <p>Identifica’t amb el NIA de l’alumne, escull una zona del recinte i reserva els seients disponibles. Les zones d’autoritats, alumnat i docents ja estan bloquejades.</p>
-        <div class="legend compact">
-          <span><i class="dot available"></i>Disponible</span>
-          <span><i class="dot selected"></i>Seleccionat</span>
-          <span><i class="dot reserved"></i>Reservat</span>
-          <span><i class="dot pmr"></i>Mobilitat reduïda</span>
-        </div>
-        <button class="primary-btn" data-next="step-identification">Començar reserva</button>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Reserva seients · Graduació Aixovall 2026</title>
+    <link rel="stylesheet" href="assets/css/styles.css" />
+  </head>
+  <body>
+    <header class="app-header">
+      <div>
+        <p class="eyebrow">Centre de Formació Professional d’Aixovall</p>
+        <h1>Reserva de seients</h1>
       </div>
-    </section>
+      <span class="badge">Graduació 2026</span>
+    </header>
 
-    <section class="step" id="step-identification" aria-labelledby="nia-title">
-      <button class="ghost-btn" data-back="step-welcome">← Tornar</button>
-      <div class="card narrow-card">
-        <p class="eyebrow">Pas 1 de 3</p>
-        <h2 id="nia-title">Identificació amb NIA</h2>
-        <p>Introdueix el NIA de l’alumne. Cada NIA pot reservar com a màxim 4 seients.</p>
-        <form id="nia-form" class="form">
-          <label for="nia">NIA de l’alumne</label>
-          <input id="nia" name="nia" type="text" inputmode="text" autocomplete="off" placeholder="Ex. 123456A" maxlength="7" pattern="\d{6}[A-Za-z]" required />
-          <p class="form-help">6 números i una lletra al final. Sense espais ni guions.</p>
-          <button class="primary-btn" type="submit">Continuar</button>
-        </form>
-        <p class="message" id="nia-message" role="status"></p>
-      </div>
-    </section>
-
-    <section class="step" id="step-zone" aria-labelledby="zone-title">
-      <button class="ghost-btn" data-back="step-identification">← Canviar NIA</button>
-      <div class="card">
-        <p class="eyebrow">Pas 2 de 3</p>
-        <h2 id="zone-title">Selecciona una zona</h2>
-        <p id="reservation-summary"></p>
-        <div class="zone-grid" id="zone-grid"></div>
-      </div>
-    </section>
-
-    <section class="step" id="step-seats" aria-labelledby="seats-title">
-      <button class="ghost-btn" data-back="step-zone">← Canviar zona</button>
-      <div class="card seats-card">
-        <div class="seat-toolbar">
-          <div>
-            <p class="eyebrow">Pas 3 de 3</p>
-            <h2 id="seats-title">Selecciona els seients</h2>
-            <p id="zone-summary"></p>
+    <main class="app-shell">
+      <section
+        class="step is-active"
+        id="step-welcome"
+        aria-labelledby="welcome-title"
+      >
+        <div class="hero-card">
+          <p class="eyebrow">Benvinguda</p>
+          <h2 id="welcome-title">Tria fins a 4 seients per a la graduació</h2>
+          <p>
+            Identifica’t amb el NIA de l’alumne, escull una zona del recinte i
+            reserva els seients disponibles. Les zones d’autoritats, alumnat i
+            docents ja estan bloquejades.
+          </p>
+          <div class="legend compact">
+            <span><i class="dot available"></i>Disponible</span>
+            <span><i class="dot selected"></i>Seleccionat</span>
+            <span><i class="dot reserved"></i>Reservat</span>
+            <span><i class="dot pmr"></i>Mobilitat reduïda</span>
           </div>
-          <div class="counter"><span id="selected-count">0</span>/4</div>
+          <button class="primary-btn" data-next="step-identification">
+            Començar reserva
+          </button>
         </div>
+      </section>
 
-        <div class="legend">
-          <span><i class="dot available"></i>Disponible</span>
-          <span><i class="dot selected"></i>Seleccionat</span>
-          <span><i class="dot blocked"></i>Bloquejat</span>
-          <span><i class="dot reserved"></i>Ja reservat</span>
-          <span><i class="dot pmr"></i>PMR</span>
+      <section
+        class="step"
+        id="step-identification"
+        aria-labelledby="nia-title"
+      >
+        <button class="ghost-btn" data-back="step-welcome">← Tornar</button>
+        <div class="card narrow-card">
+          <p class="eyebrow">Pas 1 de 3</p>
+          <h2 id="nia-title">Identificació amb NIA</h2>
+          <p>
+            Introdueix el NIA de l’alumne. Cada NIA pot reservar com a màxim 4
+            seients.
+          </p>
+          <form id="nia-form" class="form">
+            <label for="nia">NIA de l’alumne</label>
+            <input
+              id="nia"
+              name="nia"
+              type="text"
+              inputmode="text"
+              autocomplete="off"
+              placeholder="Ex. 123456A"
+              maxlength="7"
+              pattern="\d{6}[A-Za-z]"
+              required
+            />
+            <p class="form-help">
+              6 números i una lletra al final. Sense espais ni guions.
+            </p>
+            <button class="primary-btn" type="submit">Continuar</button>
+          </form>
+          <p class="message" id="nia-message" role="status"></p>
         </div>
+      </section>
 
-        <div class="stage">ESCENARI</div>
-        <div class="seat-map-wrap">
-          <div class="seat-map" id="seat-map" aria-live="polite"></div>
+      <section class="step" id="step-zone" aria-labelledby="zone-title">
+        <button class="ghost-btn" data-back="step-identification">
+          ← Canviar NIA
+        </button>
+        <div class="card">
+          <p class="eyebrow">Pas 2 de 3</p>
+          <h2 id="zone-title">Selecciona una zona</h2>
+          <p id="reservation-summary"></p>
+          <div class="zone-grid" id="zone-grid"></div>
         </div>
+      </section>
 
-        <div class="selection-panel">
-          <strong>Seients seleccionats:</strong>
-          <span id="selected-seats">Cap encara</span>
+      <section class="step" id="step-seats" aria-labelledby="seats-title">
+        <button class="ghost-btn" data-back="step-zone">← Canviar zona</button>
+        <div class="card seats-card">
+          <div class="seat-toolbar">
+            <div>
+              <p class="eyebrow">Pas 3 de 3</p>
+              <h2 id="seats-title">Selecciona els seients</h2>
+              <p id="zone-summary"></p>
+            </div>
+            <div class="counter"><span id="selected-count">0</span>/4</div>
+          </div>
+
+          <div class="legend">
+            <span><i class="dot available"></i>Disponible</span>
+            <span><i class="dot selected"></i>Seleccionat</span>
+            <span><i class="dot blocked"></i>Bloquejat</span>
+            <span><i class="dot reserved"></i>Ja reservat</span>
+            <span><i class="dot pmr"></i>Mobilitat Reduïda</span>
+          </div>
+
+          <div class="stage">ESCENARI</div>
+          <div class="seat-map-wrap">
+            <div class="seat-map" id="seat-map" aria-live="polite"></div>
+          </div>
+
+          <div class="reservation-dock">
+            <div class="selection-panel">
+              <strong>Seients seleccionats:</strong>
+              <span id="selected-seats">Cap encara</span>
+            </div>
+            <button class="primary-btn" id="reserve-btn" disabled>
+              Confirmar reserva
+            </button>
+            <p class="message" id="seat-message" role="status"></p>
+          </div>
         </div>
+      </section>
 
-        <button class="primary-btn" id="reserve-btn" disabled>Confirmar reserva</button>
-        <p class="message" id="seat-message" role="status"></p>
-      </div>
-    </section>
+      <section class="step" id="step-success" aria-labelledby="success-title">
+        <div class="card narrow-card success-card">
+          <p class="eyebrow">Reserva confirmada</p>
+          <h2 id="success-title">Ja ho tens 🎓</h2>
+          <p id="success-message"></p>
+          <button class="primary-btn" data-next="step-welcome">
+            Fer una altra consulta
+          </button>
+        </div>
+      </section>
+    </main>
 
-    <section class="step" id="step-success" aria-labelledby="success-title">
-      <div class="card narrow-card success-card">
-        <p class="eyebrow">Reserva confirmada</p>
-        <h2 id="success-title">Ja ho tens 🎓</h2>
-        <p id="success-message"></p>
-        <button class="primary-btn" data-next="step-welcome">Fer una altra consulta</button>
-      </div>
-    </section>
-  </main>
-
-  <script src="assets/js/config.js"></script>
-  <script src="assets/js/app.js"></script>
-</body>
+    <script src="assets/js/config.js"></script>
+    <script src="assets/js/app.js"></script>
+  </body>
 </html>
