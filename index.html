@@ -39,8 +39,8 @@
         <p>Introdueix el NIA de l’alumne. Cada NIA pot reservar com a màxim 4 seients.</p>
         <form id="nia-form" class="form">
           <label for="nia">NIA de l’alumne</label>
-          <input id="nia" name="nia" type="text" inputmode="numeric" autocomplete="off" placeholder="Ex. 123456" required />
-          <p class="form-help">Només números. Sense espais, sense guions, sense drama.</p>
+          <input id="nia" name="nia" type="text" inputmode="text" autocomplete="off" placeholder="Ex. 123456A" maxlength="7" pattern="\d{6}[A-Za-z]" required />
+          <p class="form-help">6 números i una lletra al final. Sense espais ni guions.</p>
           <button class="primary-btn" type="submit">Continuar</button>
         </form>
         <p class="message" id="nia-message" role="status"></p>

@@ -45,16 +45,16 @@ function showStep(stepId) {
 
 async function handleNiaSubmit(event) {
   event.preventDefault();
-  const nia = selectors.niaInput.value.trim();
+  const nia = selectors.niaInput.value.trim().toUpperCase();
 
-  if (!/^\d{4,12}$/.test(nia)) {
-    showMessage(selectors.niaMessage, 'El NIA ha de tenir entre 4 i 12 números.', 'error');
+  if (!/^\d{6}[A-Z]$/.test(nia)) {
+    showMessage(selectors.niaMessage, 'El NIA ha de tenir 6 números i una lletra al final.', 'error');
     return;
   }
 
   try {
     const data = await postJson('api/check-student.php', { nia });
-    state.nia = nia;
+    state.nia = data.nia;
     state.alreadyReserved = data.reservedCount;
 
     if (state.alreadyReserved >= 4) {
@@ -62,7 +62,7 @@ async function handleNiaSubmit(event) {
       return;
     }
 
-    selectors.reservationSummary.textContent = `NIA ${nia}: ja té ${state.alreadyReserved} seient(s). En pot reservar ${4 - state.alreadyReserved} més.`;
+    selectors.reservationSummary.textContent = `NIA ${state.nia}: ja té ${state.alreadyReserved} seient(s). En pot reservar ${4 - state.alreadyReserved} més.`;
     showMessage(selectors.niaMessage, '', 'success');
     showStep('step-zone');
   } catch (error) {
@@ -177,12 +177,15 @@ function toggleSeat(seat) {
     return;
   }
 
+  syncSelectedSeatButtons();
+  updateSelectionPanel();
+}
+
+function syncSelectedSeatButtons() {
   document.querySelectorAll('.seat').forEach(button => {
     const selected = state.selectedSeats.some(seatItem => button.title === `${seatItem.zone}, fila ${seatItem.row}, seient ${seatItem.seat}`);
     button.classList.toggle('is-selected', selected);
   });
-
-  updateSelectionPanel();
 }
 
 function updateSelectionPanel() {
@@ -207,8 +210,22 @@ async function reserveSelectedSeats() {
     showStep('step-success');
   } catch (error) {
     selectors.reserveBtn.disabled = false;
+    if (error.status === 409 && Array.isArray(error.data?.reservedSeats)) {
+      markSeatsAsReserved(error.data.reservedSeats);
+    }
     showMessage(selectors.seatMessage, error.message, 'error');
   }
+}
+
+function markSeatsAsReserved(reservedSeats) {
+  state.reservedSeats = [...new Set([...state.reservedSeats, ...reservedSeats])];
+  state.selectedSeats = state.selectedSeats.filter(seat => !reservedSeats.includes(seat.id));
+
+  if (state.selectedZone) {
+    renderSeatMap(state.selectedZone);
+    syncSelectedSeatButtons();
+  }
+  updateSelectionPanel();
 }
 
 function resetSelection() {
@@ -232,7 +249,12 @@ async function postJson(url, payload) {
     body: JSON.stringify(payload)
   });
   const data = await response.json();
-  if (!response.ok) throw new Error(data.message || 'Error processant la petició.');
+  if (!response.ok) {
+    const error = new Error(data.message || 'Error processant la petició.');
+    error.status = response.status;
+    error.data = data;
+    throw error;
+  }
   return data;
 }
 

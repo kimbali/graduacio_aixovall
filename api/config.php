@@ -45,9 +45,9 @@ function readJsonBody(): array
 
 function normalizeNia(mixed $nia): string
 {
-    $cleanNia = preg_replace('/\D/', '', (string) $nia);
+    $cleanNia = strtoupper(trim((string) $nia));
 
-    if (!preg_match('/^\d{4,12}$/', $cleanNia)) {
+    if (!preg_match('/^\d{6}[A-Z]$/', $cleanNia)) {
         jsonResponse(['message' => 'El NIA no és vàlid.'], 422);
     }
 
