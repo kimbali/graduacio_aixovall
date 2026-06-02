@@ -50,19 +50,41 @@
         <div class="card narrow-card">
           <p class="eyebrow">Pas 1 de 3</p>
           <h2 id="nia-title">Identificació amb NIA</h2>
-          <p>
-            Introdueix el NIA de l’alumne. Cada NIA pot reservar com a màxim 4
-            seients.
-          </p>
+          <p>Cada alumne pot reservar com a màxim 4 seients.</p>
           <form id="nia-form" class="form">
+            <label for="student-name">Nom i cognoms</label>
+            <input
+              id="student-name"
+              name="student_name"
+              type="text"
+              autocomplete="name"
+              placeholder="Maria Garcia"
+              maxlength="120"
+              required
+              autofocus
+            />
+
+            <label for="student-email">Email</label>
+            <input
+              id="student-email"
+              name="student_email"
+              type="email"
+              inputmode="email"
+              autocomplete="email"
+              placeholder="maria@example.com"
+              maxlength="160"
+              required
+            />
+
             <label for="nia">NIA de l’alumne</label>
             <input
+              class="nia"
               id="nia"
               name="nia"
               type="text"
               inputmode="text"
               autocomplete="off"
-              placeholder="Ex. 123456A"
+              placeholder="123456A"
               maxlength="7"
               pattern="\d{6}[A-Za-z]"
               required
@@ -138,7 +160,7 @@
       </section>
     </main>
 
-    <script src="assets/js/config.js"></script>
-    <script src="assets/js/app.js"></script>
+    <script src="assets/js/config.js?v=20260602-2"></script>
+    <script src="assets/js/app.js?v=20260602-2"></script>
   </body>
 </html>

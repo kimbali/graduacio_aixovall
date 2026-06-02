@@ -7,6 +7,8 @@ USE graduacio_aixovall_2026;
 CREATE TABLE IF NOT EXISTS reservations (
   id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
   nia VARCHAR(12) NOT NULL,
+  student_name VARCHAR(120) NOT NULL,
+  student_email VARCHAR(160) NOT NULL,
   zone CHAR(1) NOT NULL,
   row_number TINYINT UNSIGNED NOT NULL,
   seat_number TINYINT UNSIGNED NOT NULL,

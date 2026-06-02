@@ -4,6 +4,8 @@ require_once __DIR__ . '/config.php';
 
 $data = readJsonBody();
 $nia = normalizeNia($data['nia'] ?? '');
+$studentName = normalizeStudentName($data['student_name'] ?? $data['studentName'] ?? '');
+$studentEmail = normalizeStudentEmail($data['student_email'] ?? $data['studentEmail'] ?? '');
 $seats = $data['seats'] ?? [];
 
 if (!is_array($seats) || count($seats) === 0) {
@@ -27,8 +29,8 @@ try {
     }
 
     $insertStmt = $pdo->prepare(
-        'INSERT INTO reservations (nia, zone, row_number, seat_number, seat_code)
-         VALUES (:nia, :zone, :row_number, :seat_number, :seat_code)'
+        'INSERT INTO reservations (nia, student_name, student_email, zone, row_number, seat_number, seat_code)
+         VALUES (:nia, :student_name, :student_email, :zone, :row_number, :seat_number, :seat_code)'
     );
 
     $confirmedSeats = [];
@@ -39,12 +41,18 @@ try {
         $seatNumber = (int) ($seat['seat'] ?? 0);
         $seatCode = $zone . '-' . $row . '-' . $seatNumber;
 
-        if (!preg_match('/^[A-E]$/', $zone) || $row < 2 || $row > 30 || $seatNumber < 1 || $seatNumber > 33) {
+        if (!seatExists($zone, $row, $seatNumber)) {
             throw new RuntimeException('Hi ha un seient invàlid a la selecció.');
+        }
+
+        if (seatIsBlocked($zone, $row)) {
+            throw new RuntimeException('Aquest seient no està disponible.');
         }
 
         $insertStmt->execute([
             'nia' => $nia,
+            'student_name' => $studentName,
+            'student_email' => $studentEmail,
             'zone' => $zone,
             'row_number' => $row,
             'seat_number' => $seatNumber,
@@ -72,6 +80,28 @@ try {
     jsonResponse(['message' => $exception->getMessage()], 422);
 }
 
+function normalizeStudentName(mixed $studentName): string
+{
+    $cleanStudentName = trim((string) $studentName);
+
+    if ($cleanStudentName === '' || strlen($cleanStudentName) > 120) {
+        jsonResponse(['message' => 'El nom i cognoms no són vàlids.'], 422);
+    }
+
+    return $cleanStudentName;
+}
+
+function normalizeStudentEmail(mixed $studentEmail): string
+{
+    $cleanStudentEmail = trim((string) $studentEmail);
+
+    if (!filter_var($cleanStudentEmail, FILTER_VALIDATE_EMAIL) || strlen($cleanStudentEmail) > 160) {
+        jsonResponse(['message' => 'L’email no és vàlid.'], 422);
+    }
+
+    return $cleanStudentEmail;
+}
+
 function findReservedSeatsFromSelection(array $seats): array
 {
     $conditions = [];
@@ -83,16 +113,18 @@ function findReservedSeatsFromSelection(array $seats): array
         $row = (int) ($seat['row'] ?? 0);
         $seatNumber = (int) ($seat['seat'] ?? 0);
 
-        if (!preg_match('/^[A-E]$/', $zone) || $row < 2 || $row > 30 || $seatNumber < 1 || $seatNumber > 33) {
+        if (!seatExists($zone, $row, $seatNumber)) {
             continue;
         }
 
+        $zoneParam = 'zone_' . $index;
         $rowParam = 'row_' . $index;
         $seatParam = 'seat_' . $index;
-        $conditions[] = "(row_number = :$rowParam AND seat_number = :$seatParam)";
+        $conditions[] = "(zone = :$zoneParam AND row_number = :$rowParam AND seat_number = :$seatParam)";
+        $params[$zoneParam] = $zone;
         $params[$rowParam] = $row;
         $params[$seatParam] = $seatNumber;
-        $selectedSeats[$row . '-' . $seatNumber] = $zone . '-' . $row . '-' . $seatNumber;
+        $selectedSeats[$zone . '-' . $row . '-' . $seatNumber] = $zone . '-' . $row . '-' . $seatNumber;
     }
 
     if ($conditions === []) {
@@ -100,17 +132,114 @@ function findReservedSeatsFromSelection(array $seats): array
     }
 
     $stmt = db()->prepare(
-        'SELECT row_number, seat_number FROM reservations WHERE ' . implode(' OR ', $conditions)
+        'SELECT zone, row_number, seat_number FROM reservations WHERE ' . implode(' OR ', $conditions)
     );
     $stmt->execute($params);
 
     $reservedSeats = [];
     foreach ($stmt->fetchAll() as $reservedSeat) {
-        $key = (int) $reservedSeat['row_number'] . '-' . (int) $reservedSeat['seat_number'];
+        $key = $reservedSeat['zone'] . '-' . (int) $reservedSeat['row_number'] . '-' . (int) $reservedSeat['seat_number'];
         if (isset($selectedSeats[$key])) {
             $reservedSeats[] = $selectedSeats[$key];
         }
     }
 
     return array_values(array_unique($reservedSeats));
+}
+
+function seatExists(string $zone, int $row, int $seatNumber): bool
+{
+    return in_array($seatNumber, validSeatNumbers($zone, $row), true);
+}
+
+function seatIsBlocked(string $zone, int $row): bool
+{
+    return ($zone === 'B' && $row >= 2 && $row <= 13)
+        || ($zone === 'C' && $row >= 2 && $row <= 12);
+}
+
+function validSeatNumbers(string $zone, int $row): array
+{
+    return match ($zone) {
+        'A' => zoneASeats($row),
+        'B' => zoneBSeats($row),
+        'C' => zoneCSeats($row),
+        'D' => $row >= 20 && $row <= 30 ? oddDescending(31, 1) : [],
+        'E' => $row >= 20 && $row <= 30 ? evenAscending(2, 32) : [],
+        default => [],
+    };
+}
+
+function zoneASeats(int $row): array
+{
+    if ($row >= 2 && $row <= 7) {
+        return oddDescending(29, 15);
+    }
+
+    if ($row >= 8 && $row <= 15) {
+        return oddDescending(31, 17);
+    }
+
+    if ($row >= 16 && $row <= 19) {
+        return oddDescending(33, 19);
+    }
+
+    return [];
+}
+
+function zoneBSeats(int $row): array
+{
+    if ($row >= 2 && $row <= 3) {
+        return centerSeats(13, 12);
+    }
+
+    if ($row >= 4 && $row <= 7) {
+        return centerSeats(13, 14);
+    }
+
+    if ($row >= 8 && $row <= 11) {
+        return centerSeats(15, 14);
+    }
+
+    if ($row >= 12 && $row <= 15) {
+        return centerSeats(15, 16);
+    }
+
+    if ($row >= 16 && $row <= 19) {
+        return centerSeats(17, 16);
+    }
+
+    return [];
+}
+
+function zoneCSeats(int $row): array
+{
+    if ($row >= 2 && $row <= 3) {
+        return evenAscending(14, 28);
+    }
+
+    if ($row >= 4 && $row <= 11) {
+        return evenAscending(16, 30);
+    }
+
+    if ($row >= 12 && $row <= 32) {
+        return evenAscending(18, 32);
+    }
+
+    return [];
+}
+
+function centerSeats(int $leftMax, int $rightMax): array
+{
+    return array_merge(oddDescending($leftMax, 1), evenAscending(2, $rightMax));
+}
+
+function oddDescending(int $max, int $min): array
+{
+    return array_reverse(array_filter(range($min, $max), fn (int $number): bool => $number % 2 === 1));
+}
+
+function evenAscending(int $min, int $max): array
+{
+    return array_values(array_filter(range($min, $max), fn (int $number): bool => $number % 2 === 0));
 }

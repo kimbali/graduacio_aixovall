@@ -1,5 +1,7 @@
 const state = {
   nia: '',
+  studentName: '',
+  studentEmail: '',
   alreadyReserved: 0,
   selectedZone: null,
   selectedSeats: [],
@@ -9,6 +11,8 @@ const state = {
 const selectors = {
   steps: document.querySelectorAll('.step'),
   niaForm: document.querySelector('#nia-form'),
+  studentNameInput: document.querySelector('#student-name'),
+  studentEmailInput: document.querySelector('#student-email'),
   niaInput: document.querySelector('#nia'),
   niaMessage: document.querySelector('#nia-message'),
   zoneGrid: document.querySelector('#zone-grid'),
@@ -41,11 +45,29 @@ function init() {
 function showStep(stepId) {
   selectors.steps.forEach(step => step.classList.toggle('is-active', step.id === stepId));
   window.scrollTo({ top: 0, behavior: 'smooth' });
+
+  const activeStep = document.getElementById(stepId);
+  const autofocusInput = activeStep?.querySelector('[autofocus]');
+  if (autofocusInput) {
+    setTimeout(() => autofocusInput.focus({ preventScroll: true }), 0);
+  }
 }
 
 async function handleNiaSubmit(event) {
   event.preventDefault();
+  const studentName = selectors.studentNameInput.value.trim();
+  const studentEmail = selectors.studentEmailInput.value.trim();
   const nia = selectors.niaInput.value.trim().toUpperCase();
+
+  if (studentName === '') {
+    showMessage(selectors.niaMessage, 'Introdueix el nom i cognoms.', 'error');
+    return;
+  }
+
+  if (!selectors.studentEmailInput.validity.valid) {
+    showMessage(selectors.niaMessage, 'Introdueix un email vàlid.', 'error');
+    return;
+  }
 
   if (!/^\d{6}[A-Z]$/.test(nia)) {
     showMessage(selectors.niaMessage, 'El NIA ha de tenir 6 números i una lletra al final.', 'error');
@@ -55,6 +77,8 @@ async function handleNiaSubmit(event) {
   try {
     const data = await postJson('api/check-student.php', { nia });
     state.nia = data.nia;
+    state.studentName = studentName;
+    state.studentEmail = studentEmail;
     state.alreadyReserved = data.reservedCount;
 
     if (state.alreadyReserved >= 4) {
@@ -123,22 +147,12 @@ function renderSeatMap(zone) {
 function buildSeats(zone) {
   return zone.rows.map(row => ({
     row,
-    seats: getSeatNumbers(zone.side, zone.maxSeat)
+    seats: getSeatNumbers(zone, row)
   }));
 }
 
-function getSeatNumbers(side, maxSeat) {
-  if (side === 'left') return oddNumbers(maxSeat).reverse();
-  if (side === 'right') return evenNumbers(maxSeat);
-  return [...oddNumbers(maxSeat).reverse(), ...evenNumbers(maxSeat)];
-}
-
-function oddNumbers(max) {
-  return Array.from({ length: Math.ceil(max / 2) }, (_, index) => index * 2 + 1).filter(number => number <= max);
-}
-
-function evenNumbers(max) {
-  return Array.from({ length: Math.floor(max / 2) }, (_, index) => (index + 1) * 2).filter(number => number <= max);
+function getSeatNumbers(zone, row) {
+  return zoneRowSeats(zone.id, row);
 }
 
 function createSeatButton(zone, row, seat) {
@@ -198,10 +212,27 @@ function updateSelectionPanel() {
 }
 
 async function reserveSelectedSeats() {
+  const studentName = state.studentName || selectors.studentNameInput.value.trim();
+  const studentEmail = state.studentEmail || selectors.studentEmailInput.value.trim();
+
+  if (studentName === '') {
+    showMessage(selectors.seatMessage, 'El nom i cognoms no són vàlids. Torna al pas anterior i revisa les dades.', 'error');
+    selectors.reserveBtn.disabled = false;
+    return;
+  }
+
+  if (studentEmail === '' || !selectors.studentEmailInput.validity.valid) {
+    showMessage(selectors.seatMessage, 'L’email no és vàlid. Torna al pas anterior i revisa les dades.', 'error');
+    selectors.reserveBtn.disabled = false;
+    return;
+  }
+
   try {
     selectors.reserveBtn.disabled = true;
     const data = await postJson('api/reserve.php', {
       nia: state.nia,
+      student_name: studentName,
+      student_email: studentEmail,
       seats: state.selectedSeats
     });
 
@@ -232,6 +263,10 @@ function resetSelection() {
   state.selectedZone = null;
   state.selectedSeats = [];
   state.reservedSeats = [];
+  state.studentName = '';
+  state.studentEmail = '';
+  selectors.studentNameInput.value = '';
+  selectors.studentEmailInput.value = '';
   selectors.niaInput.value = '';
 }
 
