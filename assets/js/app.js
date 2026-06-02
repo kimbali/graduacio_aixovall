@@ -99,7 +99,7 @@ function renderZones() {
 
   ZONES.forEach(zone => {
     const button = document.createElement('button');
-    button.className = 'zone-card';
+    button.className = `zone-card zone-card-${zone.id.toLowerCase()}`;
     button.type = 'button';
     button.innerHTML = `<strong>${zone.name}</strong><p>${zone.description}</p><small>Files ${zone.rows[0]}-${zone.rows.at(-1)}</small>`;
     button.addEventListener('click', () => selectZone(zone));
