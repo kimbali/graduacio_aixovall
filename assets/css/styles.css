@@ -126,6 +126,7 @@ p {
 
 .narrow-card {
   max-width: 560px;
+  margin: 0 auto;
 }
 
 .primary-btn, .ghost-btn {
@@ -223,6 +224,7 @@ input {
   font-weight: 900;
   letter-spacing: .08em;
   text-align: center;
+  margin-bottom: 24px;
 }
 
 .zone-grid::after {
@@ -249,12 +251,12 @@ input {
 
 .zone-card-d {
   grid-row: 4;
-  grid-column: 2 / span 2;
+  grid-column: 1 / span 3;
 }
 
 .zone-card-e {
   grid-row: 4;
-  grid-column: 4 / span 2;
+  grid-column: 4 / span 3;
 }
 
 .zone-card {
@@ -300,7 +302,7 @@ input {
   color: white;
   padding: .75rem;
   border-radius: .9rem;
-  margin: 1rem auto;
+  margin: 2rem auto;
   max-width: 360px;
 }
 
