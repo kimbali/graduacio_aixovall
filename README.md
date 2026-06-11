@@ -2,6 +2,42 @@
 
 Web senzilla amb HTML, CSS, JavaScript i PHP + MySQL.
 
+## Instal·lació en local amb XAMPP
+
+1. Obre XAMPP i engega Apache i MySQL.
+2. Descarrega el projecte des de GitHub dins del directori `htdocs` de XAMPP:
+
+```bash
+cd /Applications/XAMPP/xamppfiles/htdocs
+git clone https://github.com/kimbali/graduacio_aixovall.git graduacio-aixovall-2026
+```
+
+Si no tens Git instal·lat, també pots descarregar el projecte com a ZIP des de GitHub, descomprimir-lo i posar la carpeta dins de `htdocs`.
+
+3. Obre phpMyAdmin:
+
+```txt
+http://localhost/phpmyadmin
+```
+
+4. Crea una base de dades nova amb el nom:
+
+```txt
+graduacio_aixovall_2026
+```
+
+5. Entra dins la base de dades, ves a la pestanya **Importa** i importa `sql/schema.sql`.
+6. Edita `api/config.php` amb les dades locals de connexió:
+   - `DB_HOST`
+   - `DB_NAME`
+   - `DB_USER`
+   - `DB_PASS`
+7. Obre el projecte al navegador:
+
+```txt
+http://localhost/graduacio-aixovall-2026/
+```
+
 ## Instal·lació a CDMON
 
 1. Crea una base de dades MySQL des del panell de CDMON.
@@ -13,6 +49,13 @@ Web senzilla amb HTML, CSS, JavaScript i PHP + MySQL.
    - `DB_PASS`
 4. Puja tots els fitxers al directori públic del domini.
 5. Obre `index.html`.
+
+## Fitxers SQL
+
+- `sql/schema.sql`: esquema complet per a una instal·lació nova. És el fitxer que cal importar si la base de dades encara és buida.
+- `sql/add-student-fields.sql`: migració per a bases de dades antigues que ja tenien la taula `reservations`, però encara no tenien els camps `student_name` i `student_email`.
+
+Per tant, tots dos fitxers són vàlids, però tenen usos diferents. En una instal·lació nova, n'hi ha prou amb `sql/schema.sql`.
 
 ## Ajustar seients bloquejats
 
