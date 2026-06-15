@@ -30,7 +30,7 @@
         <div class="card narrow-card">
           <p class="eyebrow">Pas 1 de 3</p>
           <h2 id="nia-title">Identificació amb NIA</h2>
-          <p>Cada alumne pot reservar com a màxim 4 seients.</p>
+          <p>Cada alumne té seient assignat i pot reservar fins a 4 seients familiars.</p>
           <form id="nia-form" class="form">
             <label for="student-name">Nom i cognoms</label>
             <input
@@ -99,15 +99,15 @@
               <h2 id="seats-title">Selecciona els seients</h2>
               <p id="zone-summary"></p>
             </div>
-            <div class="counter"><span id="selected-count">0</span>/4</div>
+            <div class="counter"><span id="selected-count">0</span>/4 butaques seleccionades</div>
           </div>
 
           <div class="legend">
-            <span><i class="dot available"></i>Disponible</span>
-            <span><i class="dot selected"></i>Seleccionat</span>
-            <span><i class="dot blocked"></i>Bloquejat</span>
-            <span><i class="dot reserved"></i>Ja reservat</span>
-            <span><i class="dot pmr"></i>Mobilitat Reduïda</span>
+            <span class="pill"><i class="dot available"></i>Disponible</span>
+            <span class="pill"><i class="dot selected"></i>Seleccionat</span>
+            <span class="pill"><i class="dot blocked"></i>Bloquejat</span>
+            <span class="pill"><i class="dot reserved"></i>Ja reservat</span>
+            <span class="pill"><i class="dot pmr"></i>Mobilitat Reduïda</span>
           </div>
 
           <div class="stage">ESCENARI</div>
@@ -133,6 +133,10 @@
           <p class="eyebrow">Reserva confirmada</p>
           <h2 id="success-title">Ja ho tens</h2>
           <p id="success-message"></p>
+          <div class="success-notes">
+            <p>Recull-les al centre del 25 de juny, 8.00 h al 29 de juny, 14.00 h.</p>
+            <p>Queda’t fins al final per respecte a tothom. Acabarem cap a les 21.30 h.</p>
+          </div>
           <button class="primary-btn" data-next="step-identification">
             Fer una altra reserva
           </button>

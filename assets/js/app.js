@@ -205,25 +205,32 @@ function syncSelectedSeatButtons() {
 function updateSelectionPanel() {
   selectors.selectedCount.textContent = state.selectedSeats.length;
   selectors.reserveBtn.disabled = state.selectedSeats.length === 0;
-  selectors.selectedSeats.textContent = state.selectedSeats.length
-    ? state.selectedSeats.map(seat => `${seat.zone} fila ${seat.row} seient ${seat.seat}`).join(' · ')
+  selectors.selectedSeats.classList.toggle('selected-seats-list', state.selectedSeats.length > 0);
+  selectors.selectedSeats.innerHTML = state.selectedSeats.length
+    ? state.selectedSeats.map(seat => `<span class="pill">Fila ${seat.row} · Butaca ${seat.seat}</span>`).join('')
     : 'Cap encara';
   showMessage(selectors.seatMessage, '', 'success');
 }
 
 async function reserveSelectedSeats() {
+  if (state.selectedSeats.length === 0) {
+    selectors.reserveBtn.disabled = true;
+    showMessage(selectors.seatMessage, 'Selecciona com a mínim una butaca per confirmar la reserva.', 'error');
+    return;
+  }
+
   const studentName = state.studentName || selectors.studentNameInput.value.trim();
   const studentEmail = state.studentEmail || selectors.studentEmailInput.value.trim();
 
   if (studentName === '') {
     showMessage(selectors.seatMessage, 'El nom i cognoms no són vàlids. Torna al pas anterior i revisa les dades.', 'error');
-    selectors.reserveBtn.disabled = false;
+    selectors.reserveBtn.disabled = state.selectedSeats.length === 0;
     return;
   }
 
   if (studentEmail === '' || !selectors.studentEmailInput.validity.valid) {
     showMessage(selectors.seatMessage, 'L’email no és vàlid. Torna al pas anterior i revisa les dades.', 'error');
-    selectors.reserveBtn.disabled = false;
+    selectors.reserveBtn.disabled = state.selectedSeats.length === 0;
     return;
   }
 

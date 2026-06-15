@@ -315,8 +315,7 @@ h3,
   min-height: 215px;
 }
 
-.info-card:not(:nth-child(3n))::after {
-  content: "➜";
+.info-card::after {
   position: absolute;
   top: 50%;
   right: -1.05rem;
@@ -330,6 +329,10 @@ h3,
   color: var(--color-white);
   box-shadow: 0 10px 22px rgba(129, 38, 3, 0.22);
   transform: translateY(-50%);
+}
+
+.info-card:not(:nth-child(3n))::after {
+  content: "➜";
 }
 
 .info-icon {
@@ -354,19 +357,6 @@ h3,
 
   .info-card:nth-child(odd)::after {
     content: "➜";
-    position: absolute;
-    top: 50%;
-    right: -1.05rem;
-    z-index: 3;
-    display: grid;
-    place-items: center;
-    width: 2.1rem;
-    height: 2.1rem;
-    border-radius: 999px;
-    background: var(--color-primary);
-    color: var(--color-white);
-    box-shadow: 0 10px 22px rgba(129, 38, 3, 0.22);
-    transform: translateY(-50%);
   }
 }
 
