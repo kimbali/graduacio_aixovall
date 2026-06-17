@@ -3,9 +3,9 @@
 declare(strict_types=1);
 
 const DB_HOST = 'localhost';
-const DB_NAME = 'graduacio';
-const DB_USER = 'gradua4250';
-const DB_PASS = 'Lentejas07!!';
+const DB_NAME = 'graduacio_aixovall_2026';
+const DB_USER = 'root';
+const DB_PASS = '';
 const MAX_SEATS_PER_NIA = 4;
 
 function db(): PDO

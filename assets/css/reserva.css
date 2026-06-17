@@ -105,7 +105,7 @@ h1, h2, p {
 
 .app-shell {
   width: min(1120px, calc(100% - 2rem));
-  margin: 0 auto 7rem;
+  margin: 0 auto 2rem;
   padding-top: 24px;
 }
 
@@ -274,7 +274,7 @@ input::placeholder {
 }
 
 .zone-grid::before, .stage {
-  background: var(--color-primary-dark);
+  background: var(--color-secundary);
   color: #fff;
   box-shadow: 0 10px 22px rgba(129, 38, 3, .18);
 }
@@ -382,10 +382,6 @@ input::placeholder {
   border-radius: .9rem;
   margin: 2rem auto;
   max-width: 360px;
-}
-
-.seats-card {
-  margin-bottom: 13rem;
 }
 
 .seat-map-wrap {
@@ -599,6 +595,25 @@ input::placeholder {
   color: var(--color-primary);
 }
 
+.galloping-horse {
+  /* position: fixed;
+  left: 0;
+  bottom: 212px;
+  z-index: 0; */
+  width: 120px;
+  opacity: .15;
+  pointer-events: none;
+  animation: horse-gallop 18s linear infinite;
+}
+
+.galloping-horse img {
+  display: block;
+  width: 100%;
+  height: auto;
+  filter: sepia(.25) saturate(.85);
+  animation: horse-bob .65s ease-in-out infinite alternate;
+}
+
 @media (max-width: 820px) {
   .site-header.app-header {
     align-items: center;
@@ -668,8 +683,6 @@ input::placeholder {
     min-height: 156px;
   }
 
-  .zone-card p {}
-
   .zone-card strong {
     font-size: 22px;
     margin-bottom: .25rem;
@@ -691,10 +704,6 @@ input::placeholder {
     align-self: flex-start;
   }
 
-  .seats-card {
-    margin-bottom: 17rem;
-  }
-
   .reservation-dock {
     grid-template-columns: 1fr;
     padding: 24px 18px;
@@ -708,6 +717,10 @@ input::placeholder {
   .selection-panel {
     display: grid;
     gap: 1.5rem;
+  }
+
+  .galloping-horse {
+    bottom: 234px;
   }
 }
 
@@ -800,25 +813,6 @@ input::placeholder {
   margin-bottom: 44px;
   display: block;
   font-weight: bold;
-}
-
-.galloping-horse {
-  position: fixed;
-  left: 0;
-  bottom: 1rem;
-  z-index: 0;
-  width: 120px;
-  opacity: .15;
-  pointer-events: none;
-  animation: horse-gallop 18s linear infinite;
-}
-
-.galloping-horse img {
-  display: block;
-  width: 100%;
-  height: auto;
-  filter: sepia(.25) saturate(.85);
-  animation: horse-bob .65s ease-in-out infinite alternate;
 }
 
 .app-shell,
