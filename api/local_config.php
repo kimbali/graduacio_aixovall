@@ -8,6 +8,13 @@ const DB_USER = 'root';
 const DB_PASS = '';
 const MAX_SEATS_PER_NIA = 4;
 
+const SMTP_HOST = 'smtp.graduaciocfpandorra.ad';
+const SMTP_PORT = 465;
+const SMTP_USER = 'info@graduaciocfpandorra.ad';
+const SMTP_PASS = 'CONTRASEÑA_DEL_EMAIL';
+const SMTP_FROM = 'info@graduaciocfpandorra.ad';
+const SMTP_FROM_NAME = 'Graduació CFP Aixovall';
+
 function db(): PDO
 {
     static $pdo = null;

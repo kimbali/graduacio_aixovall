@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
-// require_once __DIR__ . '/config.php';
-require_once __DIR__ . '/local_config.php';
+require_once __DIR__ . '/config.php';
+require_once __DIR__ . '/mailer.php';
 
 $data = readJsonBody();
 $nia = normalizeNia($data['nia'] ?? '');
@@ -64,7 +64,16 @@ try {
     }
 
     $pdo->commit();
-    jsonResponse(['message' => 'Reserva confirmada.', 'seats' => $confirmedSeats]);
+
+    $emailSent = sendReservationEmail($studentEmail, $studentName, $nia, $confirmedSeats);
+
+    jsonResponse([
+        'success' => true,
+        'message' => $emailSent
+            ? 'Reserva confirmada i email enviat.'
+            : 'Reserva confirmada, però no hem pogut enviar l’email.',
+        'seats' => $confirmedSeats,
+    ]);
 } catch (PDOException $exception) {
     $pdo->rollBack();
 
@@ -75,7 +84,8 @@ try {
         ], 409);
     }
 
-    jsonResponse(['message' => 'Error de base de dades.'], 500);
+    error_log('Error de base de dades en reservar: ' . $exception->getMessage());
+    jsonResponse(['success' => false, 'message' => 'Error de base de dades.'], 500);
 } catch (Throwable $exception) {
     $pdo->rollBack();
     jsonResponse(['message' => $exception->getMessage()], 422);
