@@ -87,9 +87,8 @@ h1, h2, p {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  min-height: 44px;
-  font-size: 18px;
-  padding: 16px;
+  font-size: 16px;
+  padding: 14px;
   border: 0;
   border-radius: 999px;
   background: var(--color-primary);
@@ -106,7 +105,7 @@ h1, h2, p {
 
 .app-shell {
   width: min(1120px, calc(100% - 2rem));
-  margin: 0 auto 3rem;
+  margin: 0 auto 7rem;
   padding-top: 24px;
 }
 
@@ -231,7 +230,7 @@ input {
   padding: 1rem;
   background: #fffdfb;
   color: var(--color-text);
-  font-size: 17.6px;
+  font-size: 16px;
   margin-bottom: 16px;
 }
 
@@ -366,6 +365,7 @@ input::placeholder {
 }
 
 .counter {
+  display: none;
   padding: .75rem 1rem;
   border-radius: 1rem;
   background: var(--color-cream);
@@ -396,8 +396,18 @@ input::placeholder {
 .seat-map {
   display: grid;
   gap: .45rem;
-  min-width: 620px;
   justify-content: center;
+}
+
+.seat-map-zone-a,
+.seat-map-zone-c {
+  min-width: 310px;
+}
+
+.seat-map-zone-b,
+.seat-map-zone-d,
+.seat-map-zone-e {
+  min-width: 648px;
 }
 
 .seat-row {
@@ -501,9 +511,15 @@ input::placeholder {
 
 .selected-seats-list {
   display: flex;
-  flex-wrap: wrap;
+  flex-direction: column;
+  align-items: center;
   gap: .45rem;
   overflow: hidden;
+}
+
+.reservation-dock .selected-seats-list {
+  flex-direction: row;
+  flex-wrap: wrap;
 }
 
 .pill {
@@ -571,7 +587,7 @@ input::placeholder {
 .success-notes {
   display: grid;
   gap: .6rem;
-  margin: 1.25rem 0;
+  margin: 36px 0;
   padding: 1rem;
   border-radius: var(--radius-md);
   background: var(--color-cream);
@@ -580,7 +596,6 @@ input::placeholder {
 
 .success-notes p {
   margin: 0;
-  font-weight: 800;
   color: var(--color-primary);
 }
 
@@ -708,13 +723,24 @@ input::placeholder {
   font-weight: normal;
 }
 
-.empty-pills .empty-pill {
+#zone-summary span::after {
+  content: "·";
+  margin-right: .45rem;
+  margin-left: .45rem;
+}
+
+#zone-summary span:last-child::after {
+  content: none;
+  margin: 0;
+}
+
+.empty-pill {
   min-height: 1.92rem;
   border-style: dashed;
   background: rgba(255, 255, 255, .64);
 }
 
-.empty-pills .empty-pill::after {
+.empty-pill::after {
   content: "Butaca pendent";
   color: #b99f90;
 }
@@ -737,20 +763,27 @@ input::placeholder {
 
 .success-message {
   display: grid;
-  gap: .85rem;
+  gap: 24px;
   margin: 0 auto;
   max-width: 680px;
   text-align: left;
+}
+
+.success-message h2 {
+  font-size: 28px;
 }
 
 .success-message p {
   margin: 0;
 }
 
+.success-message .pill {
+  min-width: fit-content;
+}
+
 .success-lead {
-  color: var(--color-primary);
-  font-size: 1.1rem;
-  font-weight: 900;
+  color: var(--color-secundary);
+  font-size: 16px;
 }
 
 .success-seat-pills {
@@ -759,7 +792,14 @@ input::placeholder {
 }
 
 .success-link {
-  margin-top: .75rem;
+  margin: 24px 0;
+  background-color: transparent;
+  text-decoration: underline;
+  color: var(--color-secundary);
+  font-size: 16px;
+  margin-bottom: 44px;
+  display: block;
+  font-weight: bold;
 }
 
 .galloping-horse {

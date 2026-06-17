@@ -121,7 +121,7 @@ function renderZones() {
 async function selectZone(zone) {
   state.selectedZone = zone;
   state.selectedSeats = [];
-  selectors.zoneSummary.innerHTML = `${zone.name} · ${zone.description}`;
+  selectors.zoneSummary.innerHTML = `<span>${escapeHtml(zone.name)}</span> ${zone.description}`;
   selectors.pmrLegendPill?.classList.toggle(
     'is-visible',
     ['D', 'E'].includes(zone.id),
@@ -142,6 +142,7 @@ async function selectZone(zone) {
 
 function renderSeatMap(zone) {
   selectors.seatMap.innerHTML = '';
+  selectors.seatMap.className = `seat-map seat-map-zone-${zone.id.toLowerCase()}`;
   const seatsByRow = buildSeats(zone);
 
   seatsByRow.forEach(({ row, seats }) => {
@@ -356,6 +357,15 @@ function showMessage(element, text, type) {
   element.className = `message ${type || ''}`;
 }
 
+function renderConfirmedSeatPills(seats) {
+  return seats
+    .map(
+      seat =>
+        `<span class="pill">Fila ${seat.row} · Butaca ${seat.seat}</span>`,
+    )
+    .join('');
+}
+
 function renderSeatPills(seats) {
   const filledPills = seats.map(
     seat => `<span class="pill">Fila ${seat.row} · Butaca ${seat.seat}</span>`,
@@ -376,16 +386,19 @@ function renderSuccessMessage({
   fallbackSeats,
 }) {
   const seatPills = seats.length
-    ? renderSeatPills(seats)
+    ? renderConfirmedSeatPills(seats)
     : fallbackSeats
         .map(seat => `<span class="pill">${escapeHtml(seat)}</span>`)
         .join('');
+  const seatPillsMarkup = seatPills
+    ? `<div class="selected-seats-list success-seat-pills" aria-label="Butaques confirmades">${seatPills}</div>`
+    : '';
 
   selectors.successMessage.innerHTML = `
-    <p class="success-lead">🎉 Reserva confirmada per a <strong>${escapeHtml(studentName)}</strong>.</p>
-    <p>Hem guardat les butaques familiars vinculades al NIA <strong>${escapeHtml(nia)}</strong>. L’equip de programació ja pot deixar de picar tecles: les teves places són a la nostra llista.</p>
-    <div class="selected-seats-list success-seat-pills" aria-label="Butaques confirmades">${seatPills}</div>
-    <p>Hauries de rebre un email a <strong>${escapeHtml(studentEmail)}</strong> amb els detalls de la reserva. Si no el veus, revisa la carpeta de correu brossa.</p>
+    <h2>Reserva confirmada, ${escapeHtml(studentName)}</h2>
+    <p>Hem guardat correctament les butaques per als teus familiars, vinculades al <strong>NIA: ${escapeHtml(nia)}</strong>.</p>
+    <p>Rebràs un correu a <strong>${escapeHtml(studentEmail)}</strong> amb tots els detalls de la reserva.</p>
+    ${seatPillsMarkup}
   `;
 }
 
