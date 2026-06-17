@@ -7,6 +7,8 @@ const DB_NAME = 'graduacio_aixovall_2026';
 const DB_USER = 'root';
 const DB_PASS = '';
 const MAX_SEATS_PER_NIA = 4;
+const RESERVATION_EMAIL_FROM = 'info@graduaciocfpandorra.ad';
+const RESERVATION_CONTACT_EMAIL = 'jcampsl@educand.ad';
 
 function db(): PDO
 {

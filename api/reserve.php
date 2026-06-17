@@ -64,7 +64,16 @@ try {
     }
 
     $pdo->commit();
-    jsonResponse(['message' => 'Reserva confirmada.', 'seats' => $confirmedSeats]);
+
+    $emailSent = sendReservationConfirmationEmail($studentEmail, $studentName, $nia, $confirmedSeats);
+
+    jsonResponse([
+        'message' => $emailSent
+            ? 'Reserva confirmada. Hem enviat el correu de confirmació.'
+            : 'Reserva confirmada, però no hem pogut enviar el correu de confirmació.',
+        'seats' => $confirmedSeats,
+        'emailSent' => $emailSent,
+    ]);
 } catch (PDOException $exception) {
     $pdo->rollBack();
 
@@ -79,6 +88,71 @@ try {
 } catch (Throwable $exception) {
     $pdo->rollBack();
     jsonResponse(['message' => $exception->getMessage()], 422);
+}
+
+
+function sendReservationConfirmationEmail(string $studentEmail, string $studentName, string $nia, array $confirmedSeats): bool
+{
+    $subject = 'Confirmació de reserva · Graduació CFP Andorra 2026';
+    $body = buildReservationConfirmationEmailBody($studentName, $nia, $confirmedSeats);
+    $headers = [
+        'MIME-Version: 1.0',
+        'Content-Type: text/plain; charset=UTF-8',
+        'Content-Transfer-Encoding: 8bit',
+        'From: Graduació CFP Andorra <' . RESERVATION_EMAIL_FROM . '>',
+        'Reply-To: ' . RESERVATION_CONTACT_EMAIL,
+        'X-Auto-Response-Suppress: All',
+    ];
+
+    $encodedSubject = '=?UTF-8?B?' . base64_encode($subject) . '?=';
+    $sent = mail($studentEmail, $encodedSubject, $body, implode("\r\n", $headers), '-f' . RESERVATION_EMAIL_FROM);
+
+    if (!$sent) {
+        error_log("No s'ha pogut enviar el correu de confirmació de reserva a " . $studentEmail . ' per al NIA ' . $nia);
+    }
+
+    return $sent;
+}
+
+function buildReservationConfirmationEmailBody(string $studentName, string $nia, array $confirmedSeats): string
+{
+    $seatLines = array_map(
+        static fn (string $seatCode): string => '- ' . formatSeatForEmail($seatCode),
+        $confirmedSeats
+    );
+
+    return implode("\n", [
+        'Hola ' . $studentName . ',',
+        '',
+        'La teva reserva de butaques per a la Graduació CFP Andorra 2026 ha quedat confirmada.',
+        '',
+        'Dades de la reserva:',
+        '- NIA: ' . $nia,
+        '- Butaques:',
+        ...$seatLines,
+        '',
+        "Recollida d'entrades:",
+        "Cal recollir les entrades al centre de FP d'Aixovall entre el 25 de juny a les 8.00 h i el 29 de juny a les 14.00 h. Les entrades seran necessàries per accedir al recinte.",
+        '',
+        'Contacte:',
+        'Per a qualsevol consulta, escriu a ' . RESERVATION_CONTACT_EMAIL . '.',
+        '',
+        'No responguis a aquest correu: és un missatge automàtic i només informatiu.',
+        '',
+        'Gràcies,',
+        "Centre de Formació Professional d'Andorra",
+    ]);
+}
+
+function formatSeatForEmail(string $seatCode): string
+{
+    $parts = explode('-', $seatCode);
+
+    if (count($parts) !== 3) {
+        return $seatCode;
+    }
+
+    return 'Zona ' . $parts[0] . ' · Fila ' . $parts[1] . ' · Butaca ' . $parts[2];
 }
 
 function normalizeStudentName(mixed $studentName): string

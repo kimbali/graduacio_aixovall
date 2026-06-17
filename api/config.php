@@ -7,6 +7,8 @@ const DB_NAME = 'graduacio';
 const DB_USER = 'gradua4250';
 const DB_PASS = 'Lentejas07!!';
 const MAX_SEATS_PER_NIA = 4;
+const RESERVATION_EMAIL_FROM = 'info@graduaciocfpandorra.ad';
+const RESERVATION_CONTACT_EMAIL = 'jcampsl@educand.ad';
 
 function db(): PDO
 {
