@@ -296,13 +296,13 @@ input::placeholder {
 }
 
 .zone-grid::after {
-  content: "ENTRADA →";
+  content: "← ENTRADA";
   grid-column: 5 / 7;
   grid-row: 3;
   justify-self: end;
   align-self: center;
   padding: .5rem .75rem;
-  border-right: 4px solid var(--color-primary);
+  border-left: 4px solid var(--color-primary);
   color: var(--color-primary);
   font-size: 13.6px;
   font-weight: 900;
@@ -685,5 +685,132 @@ input::placeholder {
   .selection-panel {
     display: grid;
     gap: 1.5rem;
+  }
+}
+#reservation-summary {
+  display: inline-flex;
+  flex-wrap: wrap;
+  gap: .45rem;
+  align-items: center;
+}
+
+#reservation-summary span {
+  display: inline-flex;
+  padding: .35rem .65rem;
+  border-radius: 999px;
+  background: var(--color-cream);
+  color: var(--color-primary);
+}
+
+.empty-pills .empty-pill {
+  min-height: 1.92rem;
+  border-style: dashed;
+  background: rgba(255, 255, 255, .64);
+}
+
+.empty-pills .empty-pill::after {
+  content: "Butaca pendent";
+  color: #b99f90;
+}
+
+.pmr-legend-pill {
+  display: none;
+}
+
+.pmr-legend-pill.is-visible {
+  display: inline-flex;
+}
+
+:root {
+  --pmr: #0b70d6;
+}
+
+.seat.is-accessible:not(.is-selected) {
+  background: #eaf4ff;
+}
+
+.success-message {
+  display: grid;
+  gap: .85rem;
+  margin: 0 auto;
+  max-width: 680px;
+  text-align: left;
+}
+
+.success-message p {
+  margin: 0;
+}
+
+.success-lead {
+  color: var(--color-primary);
+  font-size: 1.1rem;
+  font-weight: 900;
+}
+
+.success-seat-pills {
+  justify-content: center;
+  padding: .35rem 0;
+}
+
+.success-link {
+  margin-top: .75rem;
+}
+
+.galloping-horse {
+  position: fixed;
+  left: 0;
+  bottom: 1rem;
+  z-index: 0;
+  width: 120px;
+  opacity: .15;
+  pointer-events: none;
+  animation: horse-gallop 18s linear infinite;
+}
+
+.galloping-horse img {
+  display: block;
+  width: 100%;
+  height: auto;
+  filter: sepia(.25) saturate(.85);
+  animation: horse-bob .65s ease-in-out infinite alternate;
+}
+
+.app-shell,
+.site-header.app-header {
+  position: relative;
+  z-index: 1;
+}
+
+@keyframes horse-gallop {
+  0% {
+    transform: translateX(-140px) scaleX(1);
+  }
+  48% {
+    transform: translateX(calc(100vw + 20px)) scaleX(1);
+  }
+  50% {
+    transform: translateX(calc(100vw + 20px)) scaleX(-1);
+  }
+  98% {
+    transform: translateX(-140px) scaleX(-1);
+  }
+  100% {
+    transform: translateX(-140px) scaleX(1);
+  }
+}
+
+@keyframes horse-bob {
+  from {
+    translate: 0 0;
+  }
+  to {
+    translate: 0 -8px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .galloping-horse,
+  .galloping-horse img {
+    animation: none;
   }
 }

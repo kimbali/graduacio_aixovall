@@ -124,7 +124,7 @@
             <span class="pill"><i class="dot selected"></i>Seleccionat</span>
             <span class="pill"><i class="dot blocked"></i>Bloquejat</span>
             <span class="pill"><i class="dot reserved"></i>Ja reservat</span>
-            <span class="pill"><i class="dot pmr"></i>Mobilitat Reduïda</span>
+            <span class="pill pmr-legend-pill" id="pmr-legend-pill"><i class="dot pmr"></i>Mobilitat Reduïda</span>
           </div>
 
           <div class="stage">🎓 ESCENARI</div>
@@ -135,7 +135,7 @@
           <div class="reservation-dock">
             <div class="selection-panel">
               <strong class="colored">Seients seleccionats:</strong>
-              <span id="selected-seats">Cap encara</span>
+              <span id="selected-seats" class="selected-seats-list empty-pills" aria-live="polite"></span>
             </div>
             <p class="message" id="seat-message" role="status"></p>
             <button class="primary-btn" id="reserve-btn" disabled>
@@ -149,7 +149,7 @@
         <div class="card narrow-card success-card">
           <p class="eyebrow">Reserva confirmada</p>
           <h2 id="success-title">Ja ho tens</h2>
-          <p id="success-message"></p>
+          <div id="success-message" class="success-message"></div>
           <div class="success-notes">
             <p>
               Recull-les al centre del 25 de juny, 8.00 h al 29 de juny, 14.00
@@ -160,12 +160,15 @@
               21.30 h.
             </p>
           </div>
-          <button class="primary-btn" data-next="step-identification">
-            Fer una altra reserva
-          </button>
+          <a class="primary-btn success-link" href="index.html#info">
+            Tornar a la informació pràctica
+          </a>
         </div>
       </section>
     </main>
+    <div class="galloping-horse" aria-hidden="true">
+      <img src="assets/images/horse.png" alt="" />
+    </div>
 
     <script src="assets/js/config.js?v=20260602-2"></script>
     <script src="assets/js/app.js?v=20260608-1"></script>
