@@ -396,8 +396,18 @@ input::placeholder {
 .seat-map {
   display: grid;
   gap: .45rem;
-  min-width: 620px;
   justify-content: center;
+}
+
+.seat-map-zone-a,
+.seat-map-zone-c {
+  min-width: 310px;
+}
+
+.seat-map-zone-b,
+.seat-map-zone-d,
+.seat-map-zone-e {
+  min-width: 648px;
 }
 
 .seat-row {
@@ -708,13 +718,24 @@ input::placeholder {
   font-weight: normal;
 }
 
-.empty-pills .empty-pill {
+#zone-summary span::after {
+  content: "·";
+  margin-right: .45rem;
+  margin-left: .45rem;
+}
+
+#zone-summary span:last-child::after {
+  content: none;
+  margin: 0;
+}
+
+.empty-pill {
   min-height: 1.92rem;
   border-style: dashed;
   background: rgba(255, 255, 255, .64);
 }
 
-.empty-pills .empty-pill::after {
+.empty-pill::after {
   content: "Butaca pendent";
   color: #b99f90;
 }
