@@ -78,3 +78,37 @@ E-20-8
 - La base de dades impedeix que dues persones reservin el mateix seient.
 - Les zones del mapa s’han simplificat en A, B, C, D i E.
 # graduacio_aixovall
+
+## Enviament d'emails amb CDmon
+
+El projecte envia emails des de PHP amb PHPMailer i SMTP autenticat de CDmon. No es fa cap enviament des de JavaScript.
+
+### Instal·lar PHPMailer
+
+En un entorn amb accés a Packagist executa:
+
+```bash
+composer install
+# o bé, si encara no tens composer.json:
+composer require phpmailer/phpmailer
+```
+
+A CDmon has de pujar també la carpeta `vendor/`, perquè conté PHPMailer i l'autoload de Composer.
+
+### Configuració SMTP
+
+Edita les constants SMTP de `api/config.php` amb les dades reals del compte de correu creat a CDmon. `SMTP_USER` ha de ser l'email complet i `SMTP_PASS` ha de ser la contrasenya real del compte de correu; no la posis mai en JavaScript.
+
+### Provar l'email sense reservar butaques
+
+Quan PHPMailer estigui instal·lat i la contrasenya SMTP sigui correcta, pots provar només l'enviament amb:
+
+```bash
+curl -X POST https://EL_TEU_DOMINI/api/test-mail.php \
+  -H 'Content-Type: application/json' \
+  -d '{"email":"el-teu-email@example.com","student_name":"Prova Email","nia":"000000A"}'
+```
+
+En local, si tens el servidor PHP arrencat, canvia la URL pel teu host local. Aquest endpoint no escriu a la base de dades ni reserva butaques; només envia un email de prova amb butaques fictícies.
+
+Si el navegador mostra `Unexpected end of JSON input`, normalment vol dir que PHP ha fallat abans de retornar JSON. El projecte carrega `api/local_config.php` automàticament només en local (`localhost`, `127.0.0.1`, servidor PHP integrat o `APP_ENV=local`) i `api/config.php` en producció. Per CDmon configura `api/config.php` amb les credencials reals del hosting; per proves locals mantén `api/local_config.php` amb les credencials locals de MySQL.
