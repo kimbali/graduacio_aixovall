@@ -121,7 +121,7 @@ function renderZones() {
 async function selectZone(zone) {
   state.selectedZone = zone;
   state.selectedSeats = [];
-  selectors.zoneSummary.textContent = `${zone.name} · ${zone.description}`;
+  selectors.zoneSummary.innerHTML = `${zone.name} · ${zone.description}`;
   selectors.pmrLegendPill?.classList.toggle(
     'is-visible',
     ['D', 'E'].includes(zone.id),

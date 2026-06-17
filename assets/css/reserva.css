@@ -385,12 +385,12 @@ input::placeholder {
 }
 
 .seats-card {
-  padding-bottom: clamp(8.5rem, 18vw, 10rem);
+  margin-bottom: 13rem;
 }
 
 .seat-map-wrap {
   overflow: auto;
-  padding-bottom: .75rem;
+  padding-bottom: 32px;
 }
 
 .seat-map {
@@ -677,7 +677,7 @@ input::placeholder {
   }
 
   .seats-card {
-    padding-bottom: 13rem;
+    margin-bottom: 17rem;
   }
 
   .reservation-dock {
