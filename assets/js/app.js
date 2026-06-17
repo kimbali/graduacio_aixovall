@@ -24,6 +24,7 @@ const selectors = {
   reserveBtn: document.querySelector('#reserve-btn'),
   seatMessage: document.querySelector('#seat-message'),
   successMessage: document.querySelector('#success-message'),
+  pmrLegendPill: document.querySelector('#pmr-legend-pill'),
 };
 
 init();
@@ -96,7 +97,7 @@ async function handleNiaSubmit(event) {
       return;
     }
 
-    selectors.reservationSummary.textContent = `NIA ${state.nia}`;
+    selectors.reservationSummary.innerHTML = `Reserva per a <span>${escapeHtml(state.studentName)}</span> · <span>${escapeHtml(state.studentEmail)}</span> · <span>NIA ${escapeHtml(state.nia)}</span>`;
     showMessage(selectors.niaMessage, '', 'success');
     showStep('step-zone');
   } catch (error) {
@@ -121,6 +122,7 @@ async function selectZone(zone) {
   state.selectedZone = zone;
   state.selectedSeats = [];
   selectors.zoneSummary.textContent = `${zone.name} · ${zone.description}`;
+  selectors.pmrLegendPill?.classList.toggle('is-visible', ['D', 'E'].includes(zone.id));
 
   try {
     const data = await getJson(
@@ -225,18 +227,9 @@ function syncSelectedSeatButtons() {
 function updateSelectionPanel() {
   selectors.selectedCount.textContent = state.selectedSeats.length;
   selectors.reserveBtn.disabled = state.selectedSeats.length === 0;
-  selectors.selectedSeats.classList.toggle(
-    'selected-seats-list',
-    state.selectedSeats.length > 0,
-  );
-  selectors.selectedSeats.innerHTML = state.selectedSeats.length
-    ? state.selectedSeats
-        .map(
-          seat =>
-            `<span class="pill">Fila ${seat.row} · Butaca ${seat.seat}</span>`,
-        )
-        .join('')
-    : 'Cap encara';
+  selectors.selectedSeats.classList.add('selected-seats-list');
+  selectors.selectedSeats.classList.toggle('empty-pills', state.selectedSeats.length === 0);
+  selectors.selectedSeats.innerHTML = renderSeatPills(state.selectedSeats);
   showMessage(selectors.seatMessage, '', 'success');
 }
 
@@ -285,7 +278,13 @@ async function reserveSelectedSeats() {
       seats: state.selectedSeats,
     });
 
-    selectors.successMessage.textContent = `Reserva feta per al NIA ${state.nia}: ${data.seats.join(', ')}.`;
+    renderSuccessMessage({
+      studentName,
+      studentEmail,
+      nia: state.nia,
+      seats: state.selectedSeats,
+      fallbackSeats: data.seats,
+    });
     resetSelection();
     showStep('step-success');
   } catch (error) {
@@ -349,4 +348,41 @@ async function postJson(url, payload) {
 function showMessage(element, text, type) {
   element.textContent = text;
   element.className = `message ${type || ''}`;
+}
+
+
+function renderSeatPills(seats) {
+  const filledPills = seats.map(
+    seat => `<span class="pill">Fila ${seat.row} · Butaca ${seat.seat}</span>`,
+  );
+  const emptyPills = Array.from(
+    { length: Math.max(0, 4 - seats.length) },
+    (_, index) => `<span class="pill empty-pill" aria-label="Butaca pendent ${index + 1}"></span>`,
+  );
+  return [...filledPills, ...emptyPills].join('');
+}
+
+function renderSuccessMessage({ studentName, studentEmail, nia, seats, fallbackSeats }) {
+  const seatPills = seats.length
+    ? renderSeatPills(seats)
+    : fallbackSeats
+        .map(seat => `<span class="pill">${escapeHtml(seat)}</span>`)
+        .join('');
+
+  selectors.successMessage.innerHTML = `
+    <p class="success-lead">🎉 Reserva confirmada per a <strong>${escapeHtml(studentName)}</strong>.</p>
+    <p>Hem guardat les butaques familiars vinculades al NIA <strong>${escapeHtml(nia)}</strong>. L’equip de programació ja pot deixar de picar tecles: les teves places són a la nostra llista.</p>
+    <div class="selected-seats-list success-seat-pills" aria-label="Butaques confirmades">${seatPills}</div>
+    <p>Hauries de rebre un email a <strong>${escapeHtml(studentEmail)}</strong> amb els detalls de la reserva. Si no el veus, revisa la carpeta de correu brossa.</p>
+  `;
+}
+
+function escapeHtml(value) {
+  return String(value).replace(/[&<>"']/g, character => ({
+    '&': '&amp;',
+    '<': '&lt;',
+    '>': '&gt;',
+    '"': '&quot;',
+    "'": '&#39;',
+  })[character]);
 }
