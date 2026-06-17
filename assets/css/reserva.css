@@ -105,7 +105,7 @@ h1, h2, p {
 
 .app-shell {
   width: min(1120px, calc(100% - 2rem));
-  margin: 0 auto 3rem;
+  margin: 0 auto 7rem;
   padding-top: 24px;
 }
 
@@ -767,6 +767,10 @@ input::placeholder {
   margin: 0 auto;
   max-width: 680px;
   text-align: left;
+}
+
+.success-message h2 {
+  font-size: 28px;
 }
 
 .success-message p {

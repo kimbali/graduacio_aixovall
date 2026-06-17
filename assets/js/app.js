@@ -395,7 +395,7 @@ function renderSuccessMessage({
     : '';
 
   selectors.successMessage.innerHTML = `
-    <h2>Reserva confirmada, <strong>${escapeHtml(studentName)}</strong></h2>
+    <h2>Reserva confirmada, ${escapeHtml(studentName)}</h2>
     <p>Hem guardat correctament les butaques per als teus familiars, vinculades al <strong>NIA: ${escapeHtml(nia)}</strong>.</p>
     <p>Rebràs un correu a <strong>${escapeHtml(studentEmail)}</strong> amb tots els detalls de la reserva.</p>
     ${seatPillsMarkup}
