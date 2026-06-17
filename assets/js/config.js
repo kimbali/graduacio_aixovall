@@ -2,7 +2,7 @@ const ZONES = [
   {
     id: 'A',
     name: 'Zona A',
-    description: 'Bloc lateral esquerre superior',
+    description: 'Familiars',
     rows: rowsRange(2, 19),
     layout: [
       { rows: rowsRange(2, 7), seats: oddDescending(29, 15) },
@@ -13,7 +13,7 @@ const ZONES = [
   {
     id: 'B',
     name: 'Zona B',
-    description: 'Bloc central superior',
+    description: 'Autoritats / Graduats / Familiars',
     rows: rowsRange(2, 19),
     layout: [
       { rows: rowsRange(2, 3), seats: centerSeats(13, 12) },
@@ -26,7 +26,7 @@ const ZONES = [
   {
     id: 'C',
     name: 'Zona C',
-    description: 'Bloc lateral dret superior',
+    description: 'Professorat / Familiars',
     rows: rowsRange(2, 19),
     layout: [
       { rows: rowsRange(2, 3), seats: evenAscending(14, 28) },
@@ -37,7 +37,7 @@ const ZONES = [
   {
     id: 'D',
     name: 'Zona D',
-    description: 'Bloc inferior esquerre',
+    description: 'Familiars / Mobilitat reduïda',
     rows: [20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30],
     side: 'left',
     maxSeat: 31,
@@ -45,7 +45,7 @@ const ZONES = [
   {
     id: 'E',
     name: 'Zona E',
-    description: 'Bloc inferior dret',
+    description: 'Familiars / Mobilitat reduïda',
     rows: [20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30],
     side: 'right',
     maxSeat: 32,

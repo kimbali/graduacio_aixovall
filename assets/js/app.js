@@ -5,7 +5,7 @@ const state = {
   alreadyReserved: 0,
   selectedZone: null,
   selectedSeats: [],
-  reservedSeats: []
+  reservedSeats: [],
 };
 
 const selectors = {
@@ -23,7 +23,7 @@ const selectors = {
   selectedSeats: document.querySelector('#selected-seats'),
   reserveBtn: document.querySelector('#reserve-btn'),
   seatMessage: document.querySelector('#seat-message'),
-  successMessage: document.querySelector('#success-message')
+  successMessage: document.querySelector('#success-message'),
 };
 
 init();
@@ -43,7 +43,9 @@ function init() {
 }
 
 function showStep(stepId) {
-  selectors.steps.forEach(step => step.classList.toggle('is-active', step.id === stepId));
+  selectors.steps.forEach(step =>
+    step.classList.toggle('is-active', step.id === stepId),
+  );
   window.scrollTo({ top: 0, behavior: 'smooth' });
 
   const activeStep = document.getElementById(stepId);
@@ -70,7 +72,11 @@ async function handleNiaSubmit(event) {
   }
 
   if (!/^\d{6}[A-Z]$/.test(nia)) {
-    showMessage(selectors.niaMessage, 'El NIA ha de tenir 6 números i una lletra al final.', 'error');
+    showMessage(
+      selectors.niaMessage,
+      'El NIA ha de tenir 6 números i una lletra al final.',
+      'error',
+    );
     return;
   }
 
@@ -82,11 +88,15 @@ async function handleNiaSubmit(event) {
     state.alreadyReserved = data.reservedCount;
 
     if (state.alreadyReserved >= 4) {
-      showMessage(selectors.niaMessage, 'Aquest NIA ja té 4 seients reservats.', 'error');
+      showMessage(
+        selectors.niaMessage,
+        'Aquest NIA ja té 4 seients reservats. No es permet modificar la reserva.',
+        'error',
+      );
       return;
     }
 
-    selectors.reservationSummary.textContent = `NIA ${state.nia}: ja té ${state.alreadyReserved} seient(s). En pot reservar ${4 - state.alreadyReserved} més.`;
+    selectors.reservationSummary.textContent = `NIA ${state.nia}`;
     showMessage(selectors.niaMessage, '', 'success');
     showStep('step-zone');
   } catch (error) {
@@ -101,7 +111,7 @@ function renderZones() {
     const button = document.createElement('button');
     button.className = `zone-card zone-card-${zone.id.toLowerCase()}`;
     button.type = 'button';
-    button.innerHTML = `<strong>${zone.name}</strong><p>${zone.description}</p><small>Files ${zone.rows[0]}-${zone.rows.at(-1)}</small>`;
+    button.innerHTML = `<strong>${zone.name}</strong><p>${zone.description}</p>`;
     button.addEventListener('click', () => selectZone(zone));
     selectors.zoneGrid.appendChild(button);
   });
@@ -113,7 +123,9 @@ async function selectZone(zone) {
   selectors.zoneSummary.textContent = `${zone.name} · ${zone.description}`;
 
   try {
-    const data = await getJson(`api/seats.php?zone=${encodeURIComponent(zone.id)}`);
+    const data = await getJson(
+      `api/seats.php?zone=${encodeURIComponent(zone.id)}`,
+    );
     state.reservedSeats = data.reservedSeats;
     renderSeatMap(zone);
     updateSelectionPanel();
@@ -138,7 +150,9 @@ function renderSeatMap(zone) {
     const line = document.createElement('div');
     line.className = 'seats-line';
 
-    seats.forEach(seat => line.appendChild(createSeatButton(zone.id, row, seat)));
+    seats.forEach(seat =>
+      line.appendChild(createSeatButton(zone.id, row, seat)),
+    );
     rowElement.append(rowNumber, line);
     selectors.seatMap.appendChild(rowElement);
   });
@@ -147,7 +161,7 @@ function renderSeatMap(zone) {
 function buildSeats(zone) {
   return zone.rows.map(row => ({
     row,
-    seats: getSeatNumbers(zone, row)
+    seats: getSeatNumbers(zone, row),
   }));
 }
 
@@ -183,7 +197,9 @@ function toggleSeat(seat) {
   const exists = state.selectedSeats.some(selected => selected.id === seat.id);
 
   if (exists) {
-    state.selectedSeats = state.selectedSeats.filter(selected => selected.id !== seat.id);
+    state.selectedSeats = state.selectedSeats.filter(
+      selected => selected.id !== seat.id,
+    );
   } else if (state.selectedSeats.length + state.alreadyReserved < 4) {
     state.selectedSeats.push(seat);
   } else {
@@ -197,7 +213,11 @@ function toggleSeat(seat) {
 
 function syncSelectedSeatButtons() {
   document.querySelectorAll('.seat').forEach(button => {
-    const selected = state.selectedSeats.some(seatItem => button.title === `${seatItem.zone}, fila ${seatItem.row}, seient ${seatItem.seat}`);
+    const selected = state.selectedSeats.some(
+      seatItem =>
+        button.title ===
+        `${seatItem.zone}, fila ${seatItem.row}, seient ${seatItem.seat}`,
+    );
     button.classList.toggle('is-selected', selected);
   });
 }
@@ -205,9 +225,17 @@ function syncSelectedSeatButtons() {
 function updateSelectionPanel() {
   selectors.selectedCount.textContent = state.selectedSeats.length;
   selectors.reserveBtn.disabled = state.selectedSeats.length === 0;
-  selectors.selectedSeats.classList.toggle('selected-seats-list', state.selectedSeats.length > 0);
+  selectors.selectedSeats.classList.toggle(
+    'selected-seats-list',
+    state.selectedSeats.length > 0,
+  );
   selectors.selectedSeats.innerHTML = state.selectedSeats.length
-    ? state.selectedSeats.map(seat => `<span class="pill">Fila ${seat.row} · Butaca ${seat.seat}</span>`).join('')
+    ? state.selectedSeats
+        .map(
+          seat =>
+            `<span class="pill">Fila ${seat.row} · Butaca ${seat.seat}</span>`,
+        )
+        .join('')
     : 'Cap encara';
   showMessage(selectors.seatMessage, '', 'success');
 }
@@ -215,21 +243,35 @@ function updateSelectionPanel() {
 async function reserveSelectedSeats() {
   if (state.selectedSeats.length === 0) {
     selectors.reserveBtn.disabled = true;
-    showMessage(selectors.seatMessage, 'Selecciona com a mínim una butaca per confirmar la reserva.', 'error');
+    showMessage(
+      selectors.seatMessage,
+      'Selecciona com a mínim una butaca per confirmar la reserva.',
+      'error',
+    );
     return;
   }
 
-  const studentName = state.studentName || selectors.studentNameInput.value.trim();
-  const studentEmail = state.studentEmail || selectors.studentEmailInput.value.trim();
+  const studentName =
+    state.studentName || selectors.studentNameInput.value.trim();
+  const studentEmail =
+    state.studentEmail || selectors.studentEmailInput.value.trim();
 
   if (studentName === '') {
-    showMessage(selectors.seatMessage, 'El nom i cognoms no són vàlids. Torna al pas anterior i revisa les dades.', 'error');
+    showMessage(
+      selectors.seatMessage,
+      'El nom i cognoms no són vàlids. Torna al pas anterior i revisa les dades.',
+      'error',
+    );
     selectors.reserveBtn.disabled = state.selectedSeats.length === 0;
     return;
   }
 
   if (studentEmail === '' || !selectors.studentEmailInput.validity.valid) {
-    showMessage(selectors.seatMessage, 'L’email no és vàlid. Torna al pas anterior i revisa les dades.', 'error');
+    showMessage(
+      selectors.seatMessage,
+      'L’email no és vàlid. Torna al pas anterior i revisa les dades.',
+      'error',
+    );
     selectors.reserveBtn.disabled = state.selectedSeats.length === 0;
     return;
   }
@@ -240,7 +282,7 @@ async function reserveSelectedSeats() {
       nia: state.nia,
       student_name: studentName,
       student_email: studentEmail,
-      seats: state.selectedSeats
+      seats: state.selectedSeats,
     });
 
     selectors.successMessage.textContent = `Reserva feta per al NIA ${state.nia}: ${data.seats.join(', ')}.`;
@@ -256,8 +298,12 @@ async function reserveSelectedSeats() {
 }
 
 function markSeatsAsReserved(reservedSeats) {
-  state.reservedSeats = [...new Set([...state.reservedSeats, ...reservedSeats])];
-  state.selectedSeats = state.selectedSeats.filter(seat => !reservedSeats.includes(seat.id));
+  state.reservedSeats = [
+    ...new Set([...state.reservedSeats, ...reservedSeats]),
+  ];
+  state.selectedSeats = state.selectedSeats.filter(
+    seat => !reservedSeats.includes(seat.id),
+  );
 
   if (state.selectedZone) {
     renderSeatMap(state.selectedZone);
@@ -288,7 +334,7 @@ async function postJson(url, payload) {
   const response = await fetch(url, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(payload)
+    body: JSON.stringify(payload),
   });
   const data = await response.json();
   if (!response.ok) {

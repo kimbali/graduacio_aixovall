@@ -29,37 +29,47 @@
         <a class="ghost-btn inline-link" href="index.html">← Tornar</a>
         <div class="card narrow-card">
           <p class="eyebrow">Pas 1 de 3</p>
-          <h2 id="nia-title">Identificació amb NIA</h2>
+          <h2 id="nia-title">Identifica't amb NIA</h2>
           <p>
-            Cada alumne té seient assignat i pot reservar fins a 4 seients
-            familiars.
+            L’alumnat que es gradua tindrà el seu seient assignat davant de
+            l’escenari, a la <strong>zona central de graduats</strong>. Aquestes
+            butaques seran assignades pels tutors.
+          </p>
+          <p>
+            Cada alumne podrà
+            <strong>reservar un màxim de 4 butaques</strong> per als seus
+            familiars a les zones disponibles.
+          </p>
+          <p>
+            <strong>Introdueix les dades de l’alumne</strong> per començar la
+            reserva de les butaques.
           </p>
           <form id="nia-form" class="form">
-            <label for="student-name">Nom i cognoms</label>
+            <label for="student-name">Nom i cognoms del graduat</label>
             <input
               id="student-name"
               name="student_name"
               type="text"
               autocomplete="name"
-              placeholder="Maria Garcia"
+              placeholder="Antoni Fiter"
               maxlength="120"
               required
               autofocus
             />
 
-            <label for="student-email">Email</label>
+            <label for="student-email">Email de contacte</label>
             <input
               id="student-email"
               name="student_email"
               type="email"
               inputmode="email"
               autocomplete="email"
-              placeholder="cfp@andorra.ad"
+              placeholder="futur@andorra.ad"
               maxlength="160"
               required
             />
 
-            <label for="nia">NIA de l'alumne</label>
+            <label for="nia">NIA de l'alumne que es gradua</label>
             <input
               class="nia"
               id="nia"
@@ -75,9 +85,11 @@
             <p class="form-help">
               6 números i una lletra al final. Sense espais ni guions.
             </p>
-            <button class="primary-btn" type="submit">Continuar</button>
+            <button class="primary-btn" type="submit">
+              Selecciona les butaques
+            </button>
+            <p class="message" id="nia-message" role="status"></p>
           </form>
-          <p class="message" id="nia-message" role="status"></p>
         </div>
       </section>
 
@@ -87,8 +99,8 @@
         </button>
         <div class="card">
           <p class="eyebrow">Pas 2 de 3</p>
-          <h2 id="zone-title">Selecciona una zona</h2>
-          <p id="reservation-summary"></p>
+          <h2 id="seats-title">Selecciona una zona</h2>
+          <p><strong id="reservation-summary"></strong></p>
           <div class="zone-grid" id="zone-grid"></div>
         </div>
       </section>
@@ -100,7 +112,7 @@
             <div>
               <p class="eyebrow">Pas 3 de 3</p>
               <h2 id="seats-title">Selecciona els seients</h2>
-              <p id="zone-summary"></p>
+              <p><strong id="zone-summary"></strong></p>
             </div>
             <div class="counter">
               <span id="selected-count">0</span>/4 butaques seleccionades
@@ -115,20 +127,20 @@
             <span class="pill"><i class="dot pmr"></i>Mobilitat Reduïda</span>
           </div>
 
-          <div class="stage">ESCENARI</div>
+          <div class="stage">🎓 ESCENARI</div>
           <div class="seat-map-wrap">
             <div class="seat-map" id="seat-map" aria-live="polite"></div>
           </div>
 
           <div class="reservation-dock">
             <div class="selection-panel">
-              <strong>Seients seleccionats:</strong>
+              <strong class="colored">Seients seleccionats:</strong>
               <span id="selected-seats">Cap encara</span>
             </div>
+            <p class="message" id="seat-message" role="status"></p>
             <button class="primary-btn" id="reserve-btn" disabled>
               Confirmar reserva
             </button>
-            <p class="message" id="seat-message" role="status"></p>
           </div>
         </div>
       </section>
