@@ -65,7 +65,7 @@ h1, h2, p {
   left: 0;
   z-index: 20;
   width: 100%;
-  min-height: 80px;
+  min-height: 64px;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -107,7 +107,7 @@ h1, h2, p {
 .app-shell {
   width: min(1120px, calc(100% - 2rem));
   margin: 0 auto 3rem;
-  padding-top: 112px;
+  padding-top: 24px;
 }
 
 .step {
@@ -135,7 +135,7 @@ h1, h2, p {
   background: rgba(255, 255, 255, .94);
   border: 1px solid var(--color-border);
   border-radius: var(--radius-lg);
-  padding: clamp(1rem, 4vw, 2rem);
+  padding: 24px 20px;
   box-shadow: var(--shadow-card);
 }
 
@@ -221,6 +221,7 @@ p {
 
 label {
   font-weight: 800;
+  color: var(--color-secundary);
 }
 
 input {
@@ -254,7 +255,6 @@ input::placeholder {
 }
 
 .message {
-  min-height: 1.5rem;
   margin: 16px 0;
   font-weight: 700;
 }
@@ -307,6 +307,14 @@ input::placeholder {
   font-size: 13.6px;
   font-weight: 900;
   letter-spacing: .04em;
+}
+
+.zone-card p {
+  font-size: 14px;
+}
+
+.zone-card p span {
+  display: block;
 }
 
 .zone-card-a, .zone-card-b, .zone-card-c {
@@ -471,7 +479,6 @@ input::placeholder {
 
 .reservation-dock .message {
   grid-column: 1 / -1;
-  min-height: 1.25rem;
   margin: 0;
 }
 
@@ -618,11 +625,12 @@ input::placeholder {
   }
 
   .app-shell {
-    padding-top: 120px;
+    padding-top: 24px;
   }
 
   .zone-grid {
     gap: .65rem;
+    row-gap: 22px;
   }
 
   .zone-grid::before {
@@ -687,19 +695,17 @@ input::placeholder {
     gap: 1.5rem;
   }
 }
-#reservation-summary {
-  display: inline-flex;
-  flex-wrap: wrap;
-  gap: .45rem;
-  align-items: center;
+
+.reservation-summary {
+  background-color: var(--color-cream);
+  padding: 18px;
+  border-radius: 14px;
+  margin: 32px 0;
 }
 
-#reservation-summary span {
-  display: inline-flex;
-  padding: .35rem .65rem;
-  border-radius: 999px;
-  background: var(--color-cream);
-  color: var(--color-primary);
+.reservation-summary span {
+  display: block;
+  font-weight: normal;
 }
 
 .empty-pills .empty-pill {
@@ -785,15 +791,19 @@ input::placeholder {
   0% {
     transform: translateX(-140px) scaleX(1);
   }
+
   48% {
     transform: translateX(calc(100vw + 20px)) scaleX(1);
   }
+
   50% {
     transform: translateX(calc(100vw + 20px)) scaleX(-1);
   }
+
   98% {
     transform: translateX(-140px) scaleX(-1);
   }
+
   100% {
     transform: translateX(-140px) scaleX(1);
   }
@@ -803,12 +813,14 @@ input::placeholder {
   from {
     translate: 0 0;
   }
+
   to {
     translate: 0 -8px;
   }
 }
 
 @media (prefers-reduced-motion: reduce) {
+
   .galloping-horse,
   .galloping-horse img {
     animation: none;

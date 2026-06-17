@@ -97,7 +97,7 @@ async function handleNiaSubmit(event) {
       return;
     }
 
-    selectors.reservationSummary.innerHTML = `Reserva per a <span>${escapeHtml(state.studentName)}</span> · <span>${escapeHtml(state.studentEmail)}</span> · <span>NIA ${escapeHtml(state.nia)}</span>`;
+    selectors.reservationSummary.innerHTML = `Reserva per a: <span>${escapeHtml(state.studentName)}</span> <span>${escapeHtml(state.studentEmail)}</span> <span>NIA: ${escapeHtml(state.nia)}</span>`;
     showMessage(selectors.niaMessage, '', 'success');
     showStep('step-zone');
   } catch (error) {
@@ -122,7 +122,10 @@ async function selectZone(zone) {
   state.selectedZone = zone;
   state.selectedSeats = [];
   selectors.zoneSummary.textContent = `${zone.name} · ${zone.description}`;
-  selectors.pmrLegendPill?.classList.toggle('is-visible', ['D', 'E'].includes(zone.id));
+  selectors.pmrLegendPill?.classList.toggle(
+    'is-visible',
+    ['D', 'E'].includes(zone.id),
+  );
 
   try {
     const data = await getJson(
@@ -228,7 +231,10 @@ function updateSelectionPanel() {
   selectors.selectedCount.textContent = state.selectedSeats.length;
   selectors.reserveBtn.disabled = state.selectedSeats.length === 0;
   selectors.selectedSeats.classList.add('selected-seats-list');
-  selectors.selectedSeats.classList.toggle('empty-pills', state.selectedSeats.length === 0);
+  selectors.selectedSeats.classList.toggle(
+    'empty-pills',
+    state.selectedSeats.length === 0,
+  );
   selectors.selectedSeats.innerHTML = renderSeatPills(state.selectedSeats);
   showMessage(selectors.seatMessage, '', 'success');
 }
@@ -350,19 +356,25 @@ function showMessage(element, text, type) {
   element.className = `message ${type || ''}`;
 }
 
-
 function renderSeatPills(seats) {
   const filledPills = seats.map(
     seat => `<span class="pill">Fila ${seat.row} · Butaca ${seat.seat}</span>`,
   );
   const emptyPills = Array.from(
     { length: Math.max(0, 4 - seats.length) },
-    (_, index) => `<span class="pill empty-pill" aria-label="Butaca pendent ${index + 1}"></span>`,
+    (_, index) =>
+      `<span class="pill empty-pill" aria-label="Butaca pendent ${index + 1}"></span>`,
   );
   return [...filledPills, ...emptyPills].join('');
 }
 
-function renderSuccessMessage({ studentName, studentEmail, nia, seats, fallbackSeats }) {
+function renderSuccessMessage({
+  studentName,
+  studentEmail,
+  nia,
+  seats,
+  fallbackSeats,
+}) {
   const seatPills = seats.length
     ? renderSeatPills(seats)
     : fallbackSeats
@@ -378,11 +390,15 @@ function renderSuccessMessage({ studentName, studentEmail, nia, seats, fallbackS
 }
 
 function escapeHtml(value) {
-  return String(value).replace(/[&<>"']/g, character => ({
-    '&': '&amp;',
-    '<': '&lt;',
-    '>': '&gt;',
-    '"': '&quot;',
-    "'": '&#39;',
-  })[character]);
+  return String(value).replace(
+    /[&<>"']/g,
+    character =>
+      ({
+        '&': '&amp;',
+        '<': '&lt;',
+        '>': '&gt;',
+        '"': '&quot;',
+        "'": '&#39;',
+      })[character],
+  );
 }

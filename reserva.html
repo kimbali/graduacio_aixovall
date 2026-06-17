@@ -100,7 +100,9 @@
         <div class="card">
           <p class="eyebrow">Pas 2 de 3</p>
           <h2 id="seats-title">Selecciona una zona</h2>
-          <p><strong id="reservation-summary"></strong></p>
+          <p class="reservation-summary">
+            <strong id="reservation-summary"></strong>
+          </p>
           <div class="zone-grid" id="zone-grid"></div>
         </div>
       </section>
@@ -124,7 +126,9 @@
             <span class="pill"><i class="dot selected"></i>Seleccionat</span>
             <span class="pill"><i class="dot blocked"></i>Bloquejat</span>
             <span class="pill"><i class="dot reserved"></i>Ja reservat</span>
-            <span class="pill pmr-legend-pill" id="pmr-legend-pill"><i class="dot pmr"></i>Mobilitat Reduïda</span>
+            <span class="pill pmr-legend-pill" id="pmr-legend-pill"
+              ><i class="dot pmr"></i>Mobilitat Reduïda</span
+            >
           </div>
 
           <div class="stage">🎓 ESCENARI</div>
@@ -135,7 +139,11 @@
           <div class="reservation-dock">
             <div class="selection-panel">
               <strong class="colored">Seients seleccionats:</strong>
-              <span id="selected-seats" class="selected-seats-list empty-pills" aria-live="polite"></span>
+              <span
+                id="selected-seats"
+                class="selected-seats-list empty-pills"
+                aria-live="polite"
+              ></span>
             </div>
             <p class="message" id="seat-message" role="status"></p>
             <button class="primary-btn" id="reserve-btn" disabled>
