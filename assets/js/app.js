@@ -121,7 +121,7 @@ function renderZones() {
 async function selectZone(zone) {
   state.selectedZone = zone;
   state.selectedSeats = [];
-  selectors.zoneSummary.innerHTML = `<span>${escapeHtml(zone.name)}</span><span>${escapeHtml(zone.description)}</span>`;
+  selectors.zoneSummary.innerHTML = `<span>${escapeHtml(zone.name)}</span> ${zone.description}`;
   selectors.pmrLegendPill?.classList.toggle(
     'is-visible',
     ['D', 'E'].includes(zone.id),
@@ -359,7 +359,10 @@ function showMessage(element, text, type) {
 
 function renderConfirmedSeatPills(seats) {
   return seats
-    .map(seat => `<span class="pill">Fila ${seat.row} · Butaca ${seat.seat}</span>`)
+    .map(
+      seat =>
+        `<span class="pill">Fila ${seat.row} · Butaca ${seat.seat}</span>`,
+    )
     .join('');
 }
 
@@ -392,10 +395,10 @@ function renderSuccessMessage({
     : '';
 
   selectors.successMessage.innerHTML = `
-    <p class="success-lead">🎉 Reserva confirmada per a <strong>${escapeHtml(studentName)}</strong>.</p>
-    <p>Hem guardat les butaques familiars vinculades al NIA <strong>${escapeHtml(nia)}</strong>. L’equip de programació ja pot deixar de picar tecles: les teves places són a la nostra llista.</p>
+    <h2>Reserva confirmada, <strong>${escapeHtml(studentName)}</strong></h2>
+    <p>Hem guardat correctament les butaques per als teus familiars, vinculades al <strong>NIA: ${escapeHtml(nia)}</strong>.</p>
+    <p>Rebràs un correu a <strong>${escapeHtml(studentEmail)}</strong> amb tots els detalls de la reserva.</p>
     ${seatPillsMarkup}
-    <p>Hauries de rebre un email a <strong>${escapeHtml(studentEmail)}</strong> amb els detalls de la reserva. Si no el veus, revisa la carpeta de correu brossa.</p>
   `;
 }
 
