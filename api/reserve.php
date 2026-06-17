@@ -1,7 +1,8 @@
 <?php
 declare(strict_types=1);
-// require_once __DIR__ . '/config.php';
-require_once __DIR__ . '/local_config.php';
+require_once __DIR__ . '/config_loader.php';
+loadApiConfig();
+require_once __DIR__ . '/mailer.php';
 
 $data = readJsonBody();
 $nia = normalizeNia($data['nia'] ?? '');
@@ -17,10 +18,11 @@ if (count($seats) > MAX_SEATS_PER_NIA) {
     jsonResponse(['message' => 'No pots reservar més de 4 seients.'], 422);
 }
 
-$pdo = db();
-$pdo->beginTransaction();
+$pdo = null;
 
 try {
+    $pdo = db();
+    $pdo->beginTransaction();
     $countStmt = $pdo->prepare('SELECT COUNT(*) AS total FROM reservations WHERE nia = :nia FOR UPDATE');
     $countStmt->execute(['nia' => $nia]);
     $alreadyReserved = (int) $countStmt->fetch()['total'];
@@ -64,9 +66,20 @@ try {
     }
 
     $pdo->commit();
-    jsonResponse(['message' => 'Reserva confirmada.', 'seats' => $confirmedSeats]);
+
+    $emailSent = sendReservationEmail($studentEmail, $studentName, $nia, $confirmedSeats);
+
+    jsonResponse([
+        'success' => true,
+        'message' => $emailSent
+            ? 'Reserva confirmada i email enviat.'
+            : 'Reserva confirmada, però no hem pogut enviar l’email.',
+        'seats' => $confirmedSeats,
+    ]);
 } catch (PDOException $exception) {
-    $pdo->rollBack();
+    if ($pdo instanceof PDO && $pdo->inTransaction()) {
+        $pdo->rollBack();
+    }
 
     if ($exception->getCode() === '23000') {
         jsonResponse([
@@ -75,10 +88,21 @@ try {
         ], 409);
     }
 
-    jsonResponse(['message' => 'Error de base de dades.'], 500);
+    error_log('Error de base de dades en reservar: ' . $exception->getMessage());
+    jsonResponse(['success' => false, 'message' => 'Error de base de dades.'], 500);
+} catch (RuntimeException $exception) {
+    if ($pdo instanceof PDO && $pdo->inTransaction()) {
+        $pdo->rollBack();
+    }
+
+    jsonResponse(['success' => false, 'message' => $exception->getMessage()], 422);
 } catch (Throwable $exception) {
-    $pdo->rollBack();
-    jsonResponse(['message' => $exception->getMessage()], 422);
+    if ($pdo instanceof PDO && $pdo->inTransaction()) {
+        $pdo->rollBack();
+    }
+
+    error_log('Error inesperat en reservar: ' . $exception->getMessage());
+    jsonResponse(['success' => false, 'message' => 'No s’ha pogut completar la reserva.'], 500);
 }
 
 function normalizeStudentName(mixed $studentName): string
