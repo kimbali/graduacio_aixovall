@@ -5,7 +5,7 @@ use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
 
 require_once __DIR__ . '/../vendor/autoload.php';
-require_once __DIR__ . '/../secrets/mail.php';
+require_once __DIR__ . '/../../secrets/mail.php';
 
 /**
  * Escapa textos para mostrarlos de forma segura dentro del HTML del email.

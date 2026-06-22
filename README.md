@@ -42,7 +42,7 @@ graduacio_aixovall_2026
 8. Obre el projecte al navegador:
 
 ```txt
-http://localhost/graduacio-aixovall-2026/
+http://localhost/graduacio-aixovall-2026/web/
 ```
 
 ## Instal·lació a CDMON
@@ -61,8 +61,9 @@ http://localhost/graduacio-aixovall-2026/
    - `SMTP_USER`
    - `SMTP_PASS`
    - `SMTP_FROM_EMAIL`
-5. Puja tots els fitxers al directori públic del domini.
-6. Obre `index.html`.
+5. Puja el contingut de `web/` dins del directori `web/` del hosting.
+6. Mantén `secrets/` al mateix nivell que `web/`, fora del directori públic.
+7. Obre `index.html`.
 
 ## Fitxers SQL
 
@@ -73,7 +74,7 @@ Per tant, tots dos fitxers són vàlids, però tenen usos diferents. En una inst
 
 ## Ajustar seients bloquejats
 
-Els bloquejos estan a `assets/js/config.js`:
+Els bloquejos estan a `web/assets/js/config.js`:
 
 - `BLOCKED_SEATS`: autoritats, alumnes graduats i docents.
 - `ACCESSIBLE_SEATS`: seients PMR marcats en blau.
