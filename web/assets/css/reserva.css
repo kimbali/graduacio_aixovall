@@ -24,6 +24,10 @@
   box-sizing: border-box;
 }
 
+html {
+  overflow-x: hidden;
+}
+
 body {
   margin: 0;
   min-height: 100vh;
@@ -161,7 +165,7 @@ h1 {
 
 h2 {
   color: var(--color-primary);
-  font-size: clamp(27.2px, 5vw, 44.8px);
+  font-size: 28px;
   line-height: 1.05;
   margin-bottom: .8rem;
 }
@@ -633,7 +637,7 @@ input::placeholder {
   }
 
   h2 {
-    font-size: clamp(32px, 7vw, 48px);
+    font-size: 28px;
   }
 
   .brand-link {
@@ -645,7 +649,7 @@ input::placeholder {
   }
 
   input {
-    font-size: 19px;
+    font-size: 16px;
   }
 
   .form-help,
@@ -779,7 +783,7 @@ input::placeholder {
   gap: 24px;
   margin: 0 auto;
   max-width: 680px;
-  text-align: left;
+  text-align: center;
 }
 
 .success-message h2 {
