@@ -1,7 +1,8 @@
 <?php
 declare(strict_types=1);
 
-require_once __DIR__ . '/../secrets/db.php';
+require_once __DIR__ . '/secret-loader.php';
+load_secrets('db');
 
 require_once __DIR__ . '/mailer.php';
 

@@ -80,3 +80,14 @@ function normalizeNia(mixed $nia): string
 
     return $cleanNia;
 }
+
+return [
+    'app_name' => APP_NAME,
+    'max_seats_per_nia' => MAX_SEATS_PER_NIA,
+    'debug_mode' => DEBUG_MODE,
+    'db_host' => DB_HOST,
+    'db_port' => DB_PORT,
+    'db_name' => DB_NAME,
+    'db_user' => DB_USER,
+    'db_pass' => DB_PASS,
+];
