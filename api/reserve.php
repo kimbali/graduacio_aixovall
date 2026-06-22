@@ -1,9 +1,15 @@
 <?php
 declare(strict_types=1);
+
+// En local puedes usar local_config.php.
+// En CDmon cambia esta línea por:
 // require_once __DIR__ . '/config.php';
 require_once __DIR__ . '/local_config.php';
 
+require_once __DIR__ . '/mailer.php';
+
 $data = readJsonBody();
+
 $nia = normalizeNia($data['nia'] ?? '');
 $studentName = normalizeStudentName($data['student_name'] ?? $data['studentName'] ?? '');
 $studentEmail = normalizeStudentEmail($data['student_email'] ?? $data['studentEmail'] ?? '');
@@ -35,6 +41,7 @@ try {
     );
 
     $confirmedSeats = [];
+    $confirmedSeatsForEmail = [];
 
     foreach ($seats as $seat) {
         $zone = strtoupper((string) ($seat['zone'] ?? ''));
@@ -61,10 +68,39 @@ try {
         ]);
 
         $confirmedSeats[] = $seatCode;
+
+        $confirmedSeatsForEmail[] = [
+            'zone' => $zone,
+            'row' => $row,
+            'seat' => $seatNumber,
+        ];
     }
 
     $pdo->commit();
-    jsonResponse(['message' => 'Reserva confirmada.', 'seats' => $confirmedSeats]);
+
+    /*
+     * Enviem l'email DESPRÉS de guardar la reserva.
+     * Si l'email falla, la reserva continua sent vàlida.
+     */
+    $emailSent = false;
+
+    try {
+        $emailSent = sendReservationConfirmationEmail(
+            $studentEmail,
+            $studentName,
+            $nia,
+            $confirmedSeatsForEmail
+        );
+    } catch (Throwable $emailException) {
+        error_log('Error enviant email de confirmació: ' . $emailException->getMessage());
+    }
+
+    jsonResponse([
+        'message' => 'Reserva confirmada.',
+        'seats' => $confirmedSeats,
+        'email_sent' => $emailSent,
+    ]);
+
 } catch (PDOException $exception) {
     $pdo->rollBack();
 
@@ -76,6 +112,7 @@ try {
     }
 
     jsonResponse(['message' => 'Error de base de dades.'], 500);
+
 } catch (Throwable $exception) {
     $pdo->rollBack();
     jsonResponse(['message' => $exception->getMessage()], 422);
@@ -121,10 +158,12 @@ function findReservedSeatsFromSelection(array $seats): array
         $zoneParam = 'zone_' . $index;
         $rowParam = 'row_' . $index;
         $seatParam = 'seat_' . $index;
+
         $conditions[] = "(zone = :$zoneParam AND row_number = :$rowParam AND seat_number = :$seatParam)";
         $params[$zoneParam] = $zone;
         $params[$rowParam] = $row;
         $params[$seatParam] = $seatNumber;
+
         $selectedSeats[$zone . '-' . $row . '-' . $seatNumber] = $zone . '-' . $row . '-' . $seatNumber;
     }
 
@@ -138,8 +177,10 @@ function findReservedSeatsFromSelection(array $seats): array
     $stmt->execute($params);
 
     $reservedSeats = [];
+
     foreach ($stmt->fetchAll() as $reservedSeat) {
         $key = $reservedSeat['zone'] . '-' . (int) $reservedSeat['row_number'] . '-' . (int) $reservedSeat['seat_number'];
+
         if (isset($selectedSeats[$key])) {
             $reservedSeats[] = $selectedSeats[$key];
         }
