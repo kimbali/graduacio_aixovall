@@ -25,8 +25,17 @@ $pdo = db();
 $pdo->beginTransaction();
 
 try {
-    $countStmt = $pdo->prepare('SELECT COUNT(*) AS total FROM reservations WHERE nia = :nia FOR UPDATE');
-    $countStmt->execute(['nia' => $nia]);
+    $countStmt = $pdo->prepare(
+        'SELECT COUNT(*) AS total 
+         FROM `reservations` 
+         WHERE `nia` = :nia 
+         FOR UPDATE'
+    );
+
+    $countStmt->execute([
+        'nia' => $nia
+    ]);
+
     $alreadyReserved = (int) $countStmt->fetch()['total'];
 
     if ($alreadyReserved + count($seats) > MAX_SEATS_PER_NIA) {
@@ -34,8 +43,10 @@ try {
     }
 
     $insertStmt = $pdo->prepare(
-        'INSERT INTO reservations (nia, student_name, student_email, zone, row_number, seat_number, seat_code)
-         VALUES (:nia, :student_name, :student_email, :zone, :row_number, :seat_number, :seat_code)'
+        'INSERT INTO `reservations` 
+            (`nia`, `student_name`, `student_email`, `zone`, `row_number`, `seat_number`, `seat_code`)
+         VALUES 
+            (:nia, :student_name, :student_email, :zone, :row_number, :seat_number, :seat_code)'
     );
 
     $confirmedSeats = [];
@@ -100,7 +111,9 @@ try {
     ]);
 
 } catch (PDOException $exception) {
-    $pdo->rollBack();
+    if ($pdo->inTransaction()) {
+        $pdo->rollBack();
+    }
 
     if ($exception->getCode() === '23000') {
         jsonResponse([
@@ -109,10 +122,20 @@ try {
         ], 409);
     }
 
+    if (DEBUG_MODE) {
+        jsonResponse([
+            'message' => 'Error de base de dades.',
+            'debug' => $exception->getMessage(),
+        ], 500);
+    }
+
     jsonResponse(['message' => 'Error de base de dades.'], 500);
 
 } catch (Throwable $exception) {
-    $pdo->rollBack();
+    if ($pdo->inTransaction()) {
+        $pdo->rollBack();
+    }
+
     jsonResponse(['message' => $exception->getMessage()], 422);
 }
 
@@ -157,7 +180,8 @@ function findReservedSeatsFromSelection(array $seats): array
         $rowParam = 'row_' . $index;
         $seatParam = 'seat_' . $index;
 
-        $conditions[] = "(zone = :$zoneParam AND row_number = :$rowParam AND seat_number = :$seatParam)";
+        $conditions[] = "(`zone` = :$zoneParam AND `row_number` = :$rowParam AND `seat_number` = :$seatParam)";
+
         $params[$zoneParam] = $zone;
         $params[$rowParam] = $row;
         $params[$seatParam] = $seatNumber;
@@ -170,8 +194,11 @@ function findReservedSeatsFromSelection(array $seats): array
     }
 
     $stmt = db()->prepare(
-        'SELECT zone, row_number, seat_number FROM reservations WHERE ' . implode(' OR ', $conditions)
+        'SELECT `zone`, `row_number`, `seat_number` 
+         FROM `reservations` 
+         WHERE ' . implode(' OR ', $conditions)
     );
+
     $stmt->execute($params);
 
     $reservedSeats = [];

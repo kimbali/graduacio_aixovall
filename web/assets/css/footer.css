@@ -1,6 +1,6 @@
 .site-footer {
   margin-top: 1rem;
-  padding: 2rem 5vw 1rem;
+  padding: 1.5rem 5vw 1rem;
   background: var(--color-primary, #812603);
   color: #ffffff;
 }
@@ -8,7 +8,7 @@
 .footer-content {
   display: flex;
   justify-content: space-between;
-  gap: 1.5rem;
+  gap: 1rem;
   width: min(1180px, 100%);
   margin: 0 auto;
 }
@@ -42,7 +42,7 @@
 
 .footer-bottom {
   width: min(1180px, 100%);
-  margin: 2rem auto 0;
+  margin: 1rem auto 0;
   padding-top: 1rem;
   border-top: 1px solid rgba(255, 255, 255, 0.25);
   text-align: center;
@@ -51,7 +51,7 @@
 
 @media (max-width: 700px) {
   .site-footer {
-    padding: 1.5rem 1rem 1rem;
+    padding: 1rem 1rem 1rem;
   }
 
   .footer-content {
