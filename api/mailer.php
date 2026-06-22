@@ -5,7 +5,7 @@ use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
 
 require_once __DIR__ . '/../vendor/autoload.php';
-require_once __DIR__ . '/config.php';
+require_once __DIR__ . '/../secrets/mail.php';
 
 /**
  * Escapa textos para mostrarlos de forma segura dentro del HTML del email.
@@ -116,7 +116,7 @@ function sendReservationConfirmationEmail(
     $mail->SMTPAuth = true;
     $mail->Username = SMTP_USER;
     $mail->Password = SMTP_PASS;
-    $mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS;
+    $mail->SMTPSecure = SMTP_SECURE === 'tls' ? PHPMailer::ENCRYPTION_STARTTLS : PHPMailer::ENCRYPTION_SMTPS;
     $mail->Port = SMTP_PORT;
 
     // Codificació
