@@ -1,6 +1,7 @@
 <?php
 declare(strict_types=1);
-require_once __DIR__ . '/../secrets/db.php';
+require_once __DIR__ . '/secret-loader.php';
+load_secrets('db');
 
 $zone = strtoupper(trim($_GET['zone'] ?? ''));
 $allowedZones = ['A', 'B', 'C', 'D', 'E'];
