@@ -1,6 +1,6 @@
 <?php
 declare(strict_types=1);
-require_once __DIR__ . '/../secrets/db.php';
+require_once __DIR__ . '/../../secrets/db.php';
 
 $data = readJsonBody();
 $nia = normalizeNia($data['nia'] ?? '');
