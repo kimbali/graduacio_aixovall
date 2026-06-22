@@ -27,12 +27,19 @@ graduacio_aixovall_2026
 ```
 
 5. Entra dins la base de dades, ves a la pestanya **Importa** i importa `sql/schema.sql`.
-6. Edita `api/config.php` amb les dades locals de connexió:
+6. Edita `secrets/db.php` amb les dades locals de connexió:
    - `DB_HOST`
    - `DB_NAME`
    - `DB_USER`
    - `DB_PASS`
-7. Obre el projecte al navegador:
+
+7. Edita `secrets/mail.php` amb les dades SMTP:
+   - `SMTP_HOST`
+   - `SMTP_PORT`
+   - `SMTP_USER`
+   - `SMTP_PASS`
+   - `SMTP_FROM_EMAIL`
+8. Obre el projecte al navegador:
 
 ```txt
 http://localhost/graduacio-aixovall-2026/
@@ -42,13 +49,20 @@ http://localhost/graduacio-aixovall-2026/
 
 1. Crea una base de dades MySQL des del panell de CDMON.
 2. Obre phpMyAdmin i importa `sql/schema.sql`.
-3. Edita `api/config.php` amb les dades reals de connexió:
+3. Edita `secrets/db.php` amb les dades reals de connexió:
    - `DB_HOST`
    - `DB_NAME`
    - `DB_USER`
    - `DB_PASS`
-4. Puja tots els fitxers al directori públic del domini.
-5. Obre `index.html`.
+
+4. Edita `secrets/mail.php` amb les dades SMTP:
+   - `SMTP_HOST`
+   - `SMTP_PORT`
+   - `SMTP_USER`
+   - `SMTP_PASS`
+   - `SMTP_FROM_EMAIL`
+5. Puja tots els fitxers al directori públic del domini.
+6. Obre `index.html`.
 
 ## Fitxers SQL
 

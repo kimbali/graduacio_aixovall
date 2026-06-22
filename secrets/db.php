@@ -2,51 +2,24 @@
 declare(strict_types=1);
 
 /*
- * Configuració única del projecte.
+ * Configuració de base de dades i helpers comuns del projecte.
  *
  * IMPORTANT per a CDmon:
  * - DB_HOST: posa el host/IP que indica el panell de CDmon per a MySQL.
  *   Si amb "localhost" no connecta, posa la Web IP del hosting.
  * - DB_NAME: ha de ser EXACTAMENT el nom de la base de dades creada al panell.
  * - DB_USER / DB_PASS: usuari MySQL assignat a aquesta base de dades.
- *
- * IMPORTANT per a l'email:
- * - El correu s'envia des del compte del domini.
- * - No posis mai aquestes dades en cap fitxer JS.
  */
 
 const APP_NAME = 'Graduació CFP Andorra 2026';
 const MAX_SEATS_PER_NIA = 4;
 const DEBUG_MODE = false;
 
-
-// ==========================
-// CONFIGURACIÓ BASE DE DADES
-// ==========================
-
 const DB_HOST = 'localhost';
 const DB_PORT = 3306;
-const DB_NAME = 'graduacio';
-const DB_USER = 'gradua4250';
-const DB_PASS = 'Lentejas07!!';
-
-
-// ==========================
-// CONFIGURACIÓ EMAIL CDMON
-// ==========================
-
-const SMTP_HOST = 'smtp.graduaciocfpandorra.ad';
-const SMTP_PORT = 465;
-
-const SMTP_USER = 'info@graduaciocfpandorra.ad';
-const SMTP_PASS = 'Lentejas07!!';
-
-const SMTP_FROM_EMAIL = 'info@graduaciocfpandorra.ad';
-const SMTP_FROM_NAME = APP_NAME;
-
-const SMTP_REPLY_TO_EMAIL = 'info@graduaciocfpandorra.ad';
-const SMTP_REPLY_TO_NAME = APP_NAME;
-
+const DB_NAME = 'graduacio_aixovall_2026';
+const DB_USER = 'root';
+const DB_PASS = '';
 
 function jsonResponse(array $payload, int $status = 200): void
 {
@@ -71,7 +44,7 @@ function db(): PDO
             ]);
         } catch (PDOException $exception) {
             $payload = [
-                'message' => 'No s’ha pogut connectar amb la base de dades. Revisa api/config.php.'
+                'message' => 'No s’ha pogut connectar amb la base de dades. Revisa secrets/db.php.',
             ];
 
             if (DEBUG_MODE) {

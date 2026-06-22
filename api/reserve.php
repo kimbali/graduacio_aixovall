@@ -1,10 +1,7 @@
 <?php
 declare(strict_types=1);
 
-// En local puedes usar local_config.php.
-// En CDmon cambia esta línea por:
-// require_once __DIR__ . '/config.php';
-require_once __DIR__ . '/local_config.php';
+require_once __DIR__ . '/../secrets/db.php';
 
 require_once __DIR__ . '/mailer.php';
 
