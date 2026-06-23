@@ -338,6 +338,7 @@ input::placeholder {
 }
 
 .zone-card {
+  position: relative;
   border: thin solid var(--color-border);
   background: var(--color-white);
   border-radius: var(--radius-md);
@@ -360,6 +361,37 @@ input::placeholder {
 .zone-card:hover {
   border-color: var(--color-primary);
   transform: translateY(-2px);
+}
+
+.zone-card-b::before,
+.zone-card-b::after,
+.zone-card-d::after {
+  content: "PASSADÍS";
+  position: absolute;
+  top: 50%;
+  z-index: 1;
+  transform: translateY(-50%);
+  padding: .45rem .3rem;
+  border-radius: 999px;
+  background: rgba(255, 248, 243, .94);
+  border: 1px dashed var(--color-primary);
+  color: var(--color-primary);
+  font-size: 11.2px;
+  font-weight: 900;
+  letter-spacing: .08em;
+  line-height: 1;
+  writing-mode: vertical-rl;
+  box-shadow: 0 8px 18px rgba(129, 38, 3, .08);
+  pointer-events: none;
+}
+
+.zone-card-b::before {
+  left: -.9rem;
+}
+
+.zone-card-b::after,
+.zone-card-d::after {
+  right: -.9rem;
 }
 
 .seat-toolbar {

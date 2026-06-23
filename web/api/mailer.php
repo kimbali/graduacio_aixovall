@@ -140,52 +140,60 @@ function sendReservationConfirmationEmail(
             <meta charset='UTF-8'>
             <title>Reserva confirmada</title>
         </head>
-        <body style='font-family: Arial, sans-serif; color: #222; line-height: 1.5;'>
-            <div style='max-width: 640px; margin: 0 auto; padding: 24px;'>
-                <h1 style='margin-bottom: 8px;'>Reserva confirmada</h1>
+        <body style='margin: 0; padding: 0; background: #fff8f3; font-family: Arial, sans-serif; color: #24110a; line-height: 1.55;'>
+            <div style='max-width: 680px; margin: 0 auto; padding: 28px 18px;'>
+                <div style='background: #ffffff; border: 1px solid #f1d8c9; border-radius: 22px; overflow: hidden; box-shadow: 0 14px 35px rgba(129, 38, 3, 0.11);'>
+                    <div style='background: linear-gradient(135deg, #812603 0%, #b84b18 100%); color: #ffffff; padding: 30px 28px;'>
+                        <p style='margin: 0 0 8px; color: #ffd9c4; font-size: 13px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase;'>Graduació CFP Andorra 2026</p>
+                        <h1 style='margin: 0; font-size: 30px; line-height: 1.15;'>Reserva confirmada</h1>
+                    </div>
 
-                <p>Hola <strong>{$safeStudentName}</strong>,</p>
+                    <div style='padding: 28px;'>
+                        <p style='margin-top: 0;'>Hola <strong>{$safeStudentName}</strong>,</p>
 
-                <p>
-                    Hem guardat correctament la reserva de butaques dels teus acompanyants
-                    (NIA <strong>{$safeNia}</strong>).
-                </p>
+                        <p>
+                            Hem guardat correctament la reserva de butaques dels teus acompanyants
+                            (NIA <strong>{$safeNia}</strong>).
+                        </p>
 
-                <p>
-                    Aquest és l’email de contacte associat a la reserva:
-                    <strong>{$safeStudentEmail}</strong>
-                </p>
+                        <div style='background: #fff8f3; border-left: 5px solid #13694b; border-radius: 16px; padding: 16px 18px; margin: 22px 0;'>
+                            <p style='margin: 0 0 6px; font-size: 13px; color: #6f3a20; text-transform: uppercase; letter-spacing: .08em; font-weight: 700;'>Email de contacte</p>
+                            <p style='margin: 0; font-size: 17px;'><strong>{$safeStudentEmail}</strong></p>
+                        </div>
 
-                <h2>Butaques reservades</h2>
+                        <h2 style='color: #812603; margin: 28px 0 12px; font-size: 22px;'>Butaques reservades</h2>
+                        <ul style='margin: 0; padding-left: 20px;'>
+                            {$seatItemsHtml}
+                        </ul>
 
-                <ul>
-                    {$seatItemsHtml}
-                </ul>
+                        <h2 style='color: #812603; margin: 30px 0 14px; font-size: 22px;'>Informació de l’acte</h2>
+                        <div style='border: 1px solid #f1d8c9; border-radius: 18px; padding: 18px; background: #fffdfb;'>
+                            <p style='margin: 0 0 8px;'><strong>DATA:</strong> Dimarts 30 de juny de 2026</p>
+                            <p style='margin: 0 0 8px;'><strong>LLOC:</strong> Centre de Congressos d’Andorra la Vella</p>
+                            <p style='margin: 0;'><strong>HORA:</strong> 19h00</p>
+                        </div>
 
-                <hr style='border: none; border-top: 1px solid #ddd; margin: 24px 0;'>
+                        <ul style='margin: 22px 0; padding-left: 20px;'>
+                            <li style='margin-bottom: 12px;'><strong>Graduats/des:</strong> s'han de presentar al Centre de Congressos a les 18h15 per signar el document de presència i el diploma. A la sala Consorcia (al mateix Centre de Congressos d’Andorra la Vella).</li>
+                            <li><strong>Famílies i acompanyants:</strong> les portes de la sala d’actes s'obriran a les 18h45. Es demana arribar abans de les 18h55 per garantir el bon inici de l'acte.</li>
+                        </ul>
 
-                <p>
-                    <strong>Recorda recollir les entrades</strong> al centre de FP d’Aixovall
-                    entre el <strong>25 de juny a les 8.00 h</strong> i el
-                    <strong>29 de juny a les 14.00 h</strong>.
-                </p>
+                        <p>La durada aproximada de la cerimònia és de 2h30. Es demana tant als graduats/des com a la resta d'assistents que romanguin fins al final de l'acte per respecte a tothom.</p>
+                        <p><strong>Es prega màxima puntualitat:</strong> a les 19h00 es tancarà les portes i no s’hi podrà accedir durant els parlaments.</p>
 
-                <p>
-                    Les entrades seran necessàries per accedir al recinte.
-                </p>
+                        <div style='background: #f1f8f4; border: 1px solid #cfe7d8; border-radius: 18px; padding: 18px; margin-top: 24px;'>
+                            <p style='margin: 0 0 12px;'><strong>Recollida d’entrades</strong></p>
+                            <p style='margin: 0 0 12px;'>Les entrades s'han de recollir presencialment al centre escolar corresponent (Aixovall o La Massana) durant el mateix període en què estigui oberta la prereserva preferent, és a dir, entre el 25 i el 29 de juny en horaris d’obertura del centre.</p>
+                            <p style='margin: 0;'>El dia 30 de juny, es podrà recollir en el mateix Centre de Congressos d’Andorra la Vella, les butaques addicionals.</p>
+                        </div>
 
-                <p>
-                    T’agraïm que ens acompanyis fins al final de l’acte.
-                    Acabarem aproximadament a les <strong>21.30 h</strong>.
-                </p>
+                        <p style='margin-top: 28px;'>Gràcies i ens veiem a la graduació!</p>
 
-                <p style='margin-top: 24px;'>
-                    Gràcies i ens veiem a la graduació!
-                </p>
-
-                <p style='font-size: 13px; color: #666; margin-top: 32px;'>
-                    {$safeNia} · {$safeStudentName} · Graduació CFP Andorra 2026
-                </p>
+                        <p style='font-size: 13px; color: #6f3a20; margin-top: 32px; border-top: 1px solid #f1d8c9; padding-top: 18px;'>
+                            {$safeNia} · {$safeStudentName} · Graduació CFP Andorra 2026
+                        </p>
+                    </div>
+                </div>
             </div>
         </body>
         </html>
@@ -198,9 +206,15 @@ function sendReservationConfirmationEmail(
         "Email de contacte: {$studentEmail}\n\n" .
         "Butaques reservades:\n" .
         $seatItemsText .
-        "\nRecorda recollir les entrades al centre de FP d’Aixovall entre el 25 de juny a les 8.00 h i el 29 de juny a les 14.00 h.\n" .
-        "Les entrades seran necessàries per accedir al recinte.\n\n" .
-        "T’agraïm que ens acompanyis fins al final de l’acte. Acabarem aproximadament a les 21.30 h.\n\n" .
+        "\nDATA: Dimarts 30 de juny de 2026\n" .
+        "LLOC: Centre de Congressos d’Andorra la Vella\n" .
+        "HORA: 19h00\n\n" .
+        "Graduats/des: s'han de presentar al Centre de Congressos a les 18h15 per signar el document de presència i el diploma. A la sala Consorcia (al mateix Centre de Congressos d’Andorra la Vella).\n\n" .
+        "Famílies i acompanyants: les portes de la sala d’actes s'obriran a les 18h45. Es demana arribar abans de les 18h55 per garantir el bon inici de l'acte.\n\n" .
+        "La durada aproximada de la cerimònia és de 2h30. Es demana tant als graduats/des com a la resta d'assistents que romanguin fins al final de l'acte per respecte a tothom.\n\n" .
+        "Es prega màxima puntualitat, a les 19h00 es tancarà les portes i no s’hi podrà accedir durant els parlaments.\n\n" .
+        "Les entrades s'han de recollir presencialment al centre escolar corresponent (Aixovall o La Massana) durant el mateix període en què estigui oberta la prereserva preferent, és a dir, entre el 25 i el 29 de juny en horaris d’obertura del centre.\n\n" .
+        "El dia 30 de juny, es podrà recollir en el mateix Centre de Congressos d’Andorra la Vella, les butaques addicionals.\n\n" .
         "Gràcies i ens veiem a la graduació!\n";
 
     return $mail->send();

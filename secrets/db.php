@@ -12,7 +12,7 @@ declare(strict_types=1);
  */
 
 const APP_NAME = 'Graduació CFP Andorra 2026';
-const MAX_SEATS_PER_NIA = 4;
+const MAX_SEATS_PER_NIA = 5;
 const DEBUG_MODE = false;
 
 const DB_HOST = 'localhost';
