@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Reserva de butaca · Graduació Aixovall 2026</title>
+    <title>Reserva de butaca · Graduació FP Andorra 25-2026</title>
 
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -17,7 +17,8 @@
   </head>
   <body>
     <header class="site-header app-header">
-      <a class="brand-link" href="index.html">Graduació CFP Andorra 2026</a>
+      <a class="brand-link" href="index.html">Reserva butaques</a>
+      <p class="eyebrow">Graduació 2025-2026 FP Andorra</p>
       <!-- <a class="header-cta" href="index.html">Tornar a la landing</a> -->
     </header>
 
@@ -27,24 +28,17 @@
         id="step-identification"
         aria-labelledby="nia-title"
       >
-        <a class="ghost-btn inline-link" href="index.html">← Tornar</a>
+        <a class="ghost-btn inline-link" href="index.html"
+          >← Tornar a l'inici</a
+        >
         <div class="card narrow-card">
           <p class="eyebrow">Pas 1 de 3</p>
-          <h2 id="nia-title">Identifica't amb NIA</h2>
+          <h2 id="nia-title">Identifica't</h2>
           <p>
-            L’alumnat que es gradua tindrà el seu seient assignat davant de
-            l’escenari, a la <strong>zona central de graduats</strong>. Aquestes
-            butaques seran assignades pels tutors.
+            <strong>L’alumnat graduat tindrà el seient assignat</strong> pels
+            tutors a la zona central, davant de l’escenari.
           </p>
-          <p>
-            Cada alumne podrà
-            <strong>reservar un màxim de 4 butaques</strong> per als seus
-            familiars a les zones disponibles.
-          </p>
-          <p>
-            <strong>Introdueix les dades de l’alumne</strong> per començar la
-            reserva de les butaques.
-          </p>
+
           <form id="nia-form" class="form">
             <label for="student-name">Nom i cognoms del graduat</label>
             <input
@@ -59,6 +53,7 @@
             />
 
             <label for="student-email">Email de contacte</label>
+            <p class="sublabel">Enviarem la confirmació a aquest correu</p>
             <input
               id="student-email"
               name="student_email"
@@ -71,6 +66,10 @@
             />
 
             <label for="nia">NIA de l'alumne que es gradua</label>
+            <p class="sublabel">
+              Cada alumne podrà reservar <strong>fins a 5 butaques</strong> pels
+              seus acompanyants, fora de la zona de graduats i professorat.
+            </p>
             <input
               class="nia"
               id="nia"
@@ -96,7 +95,7 @@
 
       <section class="step" id="step-zone" aria-labelledby="zone-title">
         <button class="ghost-btn" data-back="step-identification">
-          ← Canviar NIA
+          ← Canviar dades alumne
         </button>
         <div class="card">
           <p class="eyebrow">Pas 2 de 3</p>
@@ -160,18 +159,50 @@
           <!-- <h2 id="success-title">Ja ho tens</h2> -->
           <div id="success-message" class="success-message"></div>
           <div class="success-notes">
-            <p>
-              <strong>Recorda recollir les entrades</strong> al centre de FP
-              d'Aixovall entre el 25 de juny a les 8.00 h i el 29 de juny a les
-              14.00 h. Seran necessàries per accedir al recinte.
-            </p>
-            <p>
-              <strong
-                >T’agraïm que ens acompanyis fins al final de l’acte.</strong
-              >
-              És un moment important per a tots els alumnes i famílies, i
-              acabarem aproximadament a les 21.30 h.
-            </p>
+            <h3>Important:</h3>
+            <ul>
+              <li>
+                <p>
+                  <strong
+                    >Les entrades s'han de recollir presencialment al centre
+                    escolar corresponent (Aixovall o La Massana)</strong
+                  >
+                </p>
+                <p>Inici recollida: 25 de juny 8h</p>
+                <p>Tancament recollida: 29 de juny 14h</p>
+              </li>
+
+              <li>
+                <p>
+                  <strong>Graduats/des:</strong> s'han de presentar al Centre de
+                  Congressos a les 18h15 per signar el document de presència i
+                  el diploma.
+                </p>
+              </li>
+
+              <li>
+                <p>
+                  <strong> Famílies i acompanyants: </strong>
+                  les portes de la sala d’actes s'obriran a les
+                  <strong>18h45</strong> . Es demana arribar abans de les 18h55
+                  per garantir el bon inici de l'acte.
+                </p>
+              </li>
+
+              <li>
+                <p>
+                  La durada aproximada de la cerimònia és de 2h30. Es demana
+                  tant als graduats/des com a la resta d'assistents que
+                  romanguin fins al final de l'acte per respecte a tothom.
+                </p>
+              </li>
+
+              <li>
+                <p>
+                  Al final de l'acte farem una foto amb tots la promoció 25-2026
+                </p>
+              </li>
+            </ul>
           </div>
           <a class="success-link" href="index.html#info">
             Informació pràctica
@@ -194,8 +225,8 @@
 
         <div class="footer-info">
           <p>
-            <strong>Necessites més informació?</strong>
-            <a href="mailto:jcampsl@educand.ad">Contacte'ns</a>
+            <strong>Necessites resoldre dubtes?</strong>
+            <a href="mailto:info@graduaciocfpandorra.ad">Contacta'ns</a>
           </p>
         </div>
       </div>

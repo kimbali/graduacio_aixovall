@@ -147,8 +147,8 @@ function sendReservationConfirmationEmail(
                 <p>Hola <strong>{$safeStudentName}</strong>,</p>
 
                 <p>
-                    Hem guardat correctament la reserva de butaques familiars
-                    vinculada al NIA <strong>{$safeNia}</strong>.
+                    Hem guardat correctament la reserva de butaques dels teus acompanyants
+                    (NIA <strong>{$safeNia}</strong>).
                 </p>
 
                 <p>
@@ -194,7 +194,7 @@ function sendReservationConfirmationEmail(
     $mail->AltBody =
         "Reserva confirmada\n\n" .
         "Hola {$studentName},\n\n" .
-        "Hem guardat correctament la reserva de butaques familiars vinculada al NIA {$nia}.\n\n" .
+        "Hem guardat correctament la reserva de butaques dels acompanyants del NIA {$nia}.\n\n" .
         "Email de contacte: {$studentEmail}\n\n" .
         "Butaques reservades:\n" .
         $seatItemsText .

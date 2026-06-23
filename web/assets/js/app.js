@@ -97,7 +97,7 @@ async function handleNiaSubmit(event) {
       return;
     }
 
-    selectors.reservationSummary.innerHTML = `Reserva per a: <span>${escapeHtml(state.studentName)}</span> <span>${escapeHtml(state.studentEmail)}</span> <span>NIA: ${escapeHtml(state.nia)}</span>`;
+    selectors.reservationSummary.innerHTML = `🎓 ${escapeHtml(state.studentName)} - ${escapeHtml(state.nia)}<span>Rebràs el email de confirmació a: <strong>${escapeHtml(state.studentEmail)}</strong></span>`;
     showMessage(selectors.niaMessage, '', 'success');
     showStep('step-zone');
   } catch (error) {
@@ -395,9 +395,10 @@ function renderSuccessMessage({
     : '';
 
   selectors.successMessage.innerHTML = `
-    <h2>Reserva confirmada, ${escapeHtml(studentName)}</h2>
-    <p>Hem guardat correctament les butaques per als teus familiars, vinculades al <strong>NIA: ${escapeHtml(nia)}</strong>.</p>
-    <p>Rebràs un correu amb tots els detalls de la reserva a <strong>${escapeHtml(studentEmail)}</strong></p>
+    <h2>${studentName},</h2>
+    <p>Has reservat ${seats.length} butaques pel dia de la graduació.</p>
+    <p>Rebràs un correu amb tots els detalls de la reserva a <strong>${studentEmail}</strong></p>
+    <p><strong>Butaques reservades: </strong></p>
     ${seatPillsMarkup}
   `;
 }
