@@ -114,7 +114,7 @@ h1, h2, p {
 }
 
 .app-shell {
-  width: min(1120px, calc(100% - 2rem));
+  width: min(900px, calc(100% - 2rem));
   margin: 0 auto 2rem;
   padding-top: 24px;
 }
@@ -337,6 +337,26 @@ input::placeholder {
   grid-column: 4 / span 3;
 }
 
+.zone-card-b {
+  margin-top: 12px;
+}
+
+.zone-card-c {
+  transform: rotate(-4deg);
+}
+
+.zone-card-a {
+  transform: rotate(4deg);
+}
+
+.zone-card-e {
+  transform: rotate(-2deg);
+}
+
+.zone-card-d {
+  transform: rotate(2deg);
+}
+
 .zone-card {
   position: relative;
   border: thin solid var(--color-border);
@@ -355,7 +375,7 @@ input::placeholder {
 .zone-card strong {
   font-size: 20px;
   margin-bottom: .4rem;
-  color: var(--color-primary);
+  color: var(--color-secundary);
 }
 
 .zone-card:hover {
@@ -374,7 +394,7 @@ input::placeholder {
   padding: .45rem .3rem;
   border-radius: 999px;
   background: rgba(255, 248, 243, .94);
-  border: 1px dashed var(--color-primary);
+  /* border: 1px dashed var(--color-primary); */
   color: var(--color-primary);
   font-size: 11.2px;
   font-weight: 900;
@@ -386,12 +406,12 @@ input::placeholder {
 }
 
 .zone-card-b::before {
-  left: -.9rem;
+  left: -28px;
 }
 
 .zone-card-b::after,
 .zone-card-d::after {
-  right: -.9rem;
+  right: -28px;
 }
 
 .seat-toolbar {
@@ -628,8 +648,6 @@ input::placeholder {
   border-radius: var(--radius-md);
   background: var(--color-cream);
   text-align: left;
-
-  background-color: var(--color-secundary);
 }
 
 .success-notes h3 {
@@ -643,8 +661,10 @@ input::placeholder {
   margin: 0;
   margin-bottom: 12px;
   color: var(--color-primary);
+}
 
-  color: var(--color-cream);
+.success-notes li {
+  margin-bottom: 22px;
 }
 
 .galloping-horse {
@@ -681,7 +701,7 @@ input::placeholder {
   }
 
   h2 {
-    font-size: 28px;
+    font-size: 24px;
   }
 
   .brand-link {
@@ -707,8 +727,8 @@ input::placeholder {
   }
 
   .zone-grid {
-    gap: .65rem;
     row-gap: 22px;
+    column-gap: 18px;
   }
 
   .zone-grid::before {
@@ -729,6 +749,15 @@ input::placeholder {
 
   .zone-card-a, .zone-card-b, .zone-card-c {
     min-height: 156px;
+  }
+
+  .zone-card-b::before {
+    left: -20px;
+  }
+
+  .zone-card-b::after,
+  .zone-card-d::after {
+    right: -20px;
   }
 
   .zone-card strong {
@@ -825,10 +854,6 @@ input::placeholder {
   margin: 0 auto;
   max-width: 680px;
   text-align: center;
-}
-
-.success-message h2 {
-  font-size: 28px;
 }
 
 .success-message p {

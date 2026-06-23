@@ -203,7 +203,6 @@ function sendReservationConfirmationEmail(
         "Reserva confirmada\n\n" .
         "Hola {$studentName},\n\n" .
         "Hem guardat correctament la reserva de butaques dels acompanyants del NIA {$nia}.\n\n" .
-        "Email de contacte: {$studentEmail}\n\n" .
         "Butaques reservades:\n" .
         $seatItemsText .
         "\nDATA: Dimarts 30 de juny de 2026\n" .

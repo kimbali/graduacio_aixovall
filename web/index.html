@@ -13,6 +13,12 @@
       rel="stylesheet"
     />
 
+    <!-- icons -->
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined"
+    />
+
     <!-- styles -->
     <link rel="stylesheet" href="assets/css/landing.css" />
     <link rel="stylesheet" href="assets/css/footer.css" />
@@ -54,14 +60,20 @@
       <section class="landing-info" id="info" aria-labelledby="info-title">
         <div class="section-heading">
           <p class="eyebrow colored">Informació important</p>
-          <h2 id="info-title">Tot el que cal saber abans de reservar</h2>
+          <h2 id="info-title">Sobre la graduació</h2>
         </div>
 
         <div class="info-grid">
           <article class="info-card highlight-card">
-            <span class="info-icon" aria-hidden="true">📅</span>
-            <span class="info-label">Dia i hora</span>
-            <h3>30 de juny de 2026</h3>
+            <div class="info-align">
+              <span class="info-icon" aria-hidden="true"
+                ><span class="material-symbols-outlined">
+                  calendar_add_on
+                </span></span
+              >
+              <span class="info-label">Dia i hora</span>
+            </div>
+            <h3>Dimarts 30 de juny</h3>
             <p>Començarem a les <strong>19.00 h</strong>.</p>
             <p>Intenteu arribar mitja hora abans.</p>
             <br />
@@ -76,35 +88,59 @@
           </article>
 
           <article class="info-card">
-            <span class="info-icon" aria-hidden="true">👨‍👩‍👧‍👦</span>
-            <span class="info-label">Reserva familiar</span>
+            <div class="info-align">
+              <span class="info-icon" aria-hidden="true"
+                ><span class="material-symbols-outlined">
+                  group_add
+                </span></span
+              >
+              <span class="info-label">Reserva acompanyants</span>
+            </div>
             <h3>5 butaques per alumne</h3>
             <p>
               Cada alumne té una butaca assignada i pot reservar fins a
               <strong>5 seients més pels seus acompanyants</strong>.
             </p>
+
+            <p>Un cop reservades, no es podran modificar.</p>
           </article>
 
-          <article class="info-card">
-            <span class="info-icon" aria-hidden="true">🪪</span>
-            <span class="info-label">Identificació</span>
+          <!-- <article class="info-card">
+            <div class="info-align">
+              <span class="info-icon" aria-hidden="true"
+                ><span class="material-symbols-outlined"> id_card </span></span
+              >
+              <span class="info-label">Identificació</span>
+            </div>
             <h3>Reserva amb el NIA</h3>
             <p>Fes la reserva amb el <strong>NIA de l’alumne</strong>.</p>
-          </article>
+          </article> -->
 
-          <article class="info-card">
-            <span class="info-icon" aria-hidden="true">✉️</span>
-            <span class="info-label">Confirmació</span>
+          <!-- <article class="info-card">
+            <div class="info-align">
+              <span class="info-icon" aria-hidden="true"
+                ><span class="material-symbols-outlined">
+                  mark_email_read
+                </span></span
+              >
+              <span class="info-label">Confirmació</span>
+            </div>
             <h3>Email de confirmació</h3>
             <p>
               Un cop confirmada la reserva,
               <strong>no es podrà modificar</strong>.
             </p>
-          </article>
+          </article> -->
 
           <article class="info-card">
-            <span class="info-icon" aria-hidden="true">🎟️</span>
-            <span class="info-label">Entrades</span>
+            <div class="info-align">
+              <span class="info-icon" aria-hidden="true"
+                ><span class="material-symbols-outlined">
+                  cards_stack
+                </span></span
+              >
+              <span class="info-label">Entrades</span>
+            </div>
             <h3>Recollida entrades</h3>
             <div class="ticket-pickup">
               <p>Al teu centre de FP (Massana o Aixovall)</p>
@@ -122,8 +158,14 @@
           </article>
 
           <article class="info-card">
-            <span class="info-icon" aria-hidden="true">🤠</span>
-            <span class="info-label">Final de l’acte</span>
+            <div class="info-align">
+              <span class="info-icon" aria-hidden="true"
+                ><span class="material-symbols-outlined">
+                  photo_camera
+                </span></span
+              >
+              <span class="info-label">Final de l’acte</span>
+            </div>
             <h3>Foto finish</h3>
             <p>No t'escapis, farem una foto de tots els graduats</p>
             <p>Finalització de l'acte <strong>21.30h</strong>.</p>
