@@ -9,6 +9,7 @@ require_once __DIR__ . '/mailer.php';
 $data = readJsonBody();
 
 $nia = normalizeNia($data['nia'] ?? '');
+ensureGraduatedNia($nia);
 $studentName = normalizeStudentName($data['student_name'] ?? $data['studentName'] ?? '');
 $studentEmail = normalizeStudentEmail($data['student_email'] ?? $data['studentEmail'] ?? '');
 $seats = $data['seats'] ?? [];

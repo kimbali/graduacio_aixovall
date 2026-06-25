@@ -5,6 +5,7 @@ load_secrets('db');
 
 $data = readJsonBody();
 $nia = normalizeNia($data['nia'] ?? '');
+ensureGraduatedNia($nia);
 
 $stmt = db()->prepare('SELECT COUNT(*) AS total FROM reservations WHERE nia = :nia');
 $stmt->execute(['nia' => $nia]);
