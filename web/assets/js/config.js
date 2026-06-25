@@ -1,7 +1,7 @@
 const ZONES = [
   {
     id: 'A',
-    name: 'Davantera esquerra',
+    name: 'Frontal esquerra',
     description: '',
     rows: rowsRange(2, 19),
     layout: [
@@ -12,7 +12,7 @@ const ZONES = [
   },
   {
     id: 'B',
-    name: 'Davantera central',
+    name: 'Frontal central',
     description: '',
     rows: rowsRange(2, 19),
     layout: [
@@ -25,7 +25,7 @@ const ZONES = [
   },
   {
     id: 'C',
-    name: 'Davantera dreta',
+    name: 'Frontal dreta',
     description: '',
     rows: rowsRange(2, 19),
     layout: [

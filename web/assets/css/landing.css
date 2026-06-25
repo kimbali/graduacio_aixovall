@@ -98,6 +98,7 @@ h3,
   width: 100%;
   height: 100%;
   object-fit: cover;
+  object-position: top left;
 }
 
 .landing-hero-overlay {
@@ -196,14 +197,14 @@ h3,
 .section-heading h2 {
   margin: 0;
   color: var(--color-primary);
-  font-size: 48px;
+  font-size: 28px;
 }
 
 .info-grid {
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 1.2rem;
-  width: min(1180px, 100%);
+  width: min(900px, 100%);
   margin: 0 auto;
 }
 
@@ -215,7 +216,7 @@ h3,
 }
 
 .highlight-card {
-  background: var(--color-primary);
+  background: var(--color-secundary);
   color: var(--color-white);
 }
 
@@ -235,7 +236,7 @@ h3,
 
 .info-card h3 {
   margin: 0 0 0.7rem;
-  font-size: 24px;
+  font-size: 20px;
 }
 
 .info-card p {
@@ -249,11 +250,11 @@ h3,
 }
 
 .landing-cta {
-  width: min(1050px, calc(100% - 10vw));
+  width: min(900px, calc(100% - 10vw));
   margin: 0 auto 5rem;
   padding: 2rem 1rem;
   border-radius: var(--radius-lg);
-  background: var(--color-secundary);
+  background: var(--color-primary);
   color: var(--color-white);
   text-align: center;
   box-shadow: var(--shadow-soft);
@@ -261,7 +262,7 @@ h3,
 
 .landing-cta h2 {
   margin: 0;
-  font-size: 48px;
+  font-size: 34px;
 }
 
 .landing-cta p {
@@ -303,7 +304,7 @@ h3,
 
   .landing-hero {
     align-items: end;
-    min-height: 92vh;
+    min-height: 89vh;
     padding-top: 9rem;
   }
 
@@ -321,7 +322,7 @@ h3,
   }
 
   .hero-intro {
-    font-size: 30px;
+    font-size: 18px;
   }
 
   .info-card h3 {
@@ -358,7 +359,7 @@ h3,
   min-height: 215px;
 }
 
-.info-card::after {
+/* .info-card::after {
   content: "➜";
   position: absolute;
   top: 50%;
@@ -373,10 +374,17 @@ h3,
   color: var(--color-white);
   box-shadow: 0 10px 22px rgba(129, 38, 3, 0.22);
   transform: translateY(-50%);
-}
+} */
 
 .info-card:last-child::after {
   content: none;
+}
+
+.info-align {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 12px;
 }
 
 .info-icon {
@@ -399,13 +407,13 @@ h3,
     min-height: auto;
   }
 
-  .info-card::after {
+  /* .info-card::after {
     content: "↓";
     top: auto;
     right: 50%;
     bottom: -24px;
     transform: translateX(50%);
-  }
+  } */
 
   .info-card:last-child::after {
     content: none;

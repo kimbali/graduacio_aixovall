@@ -18,7 +18,7 @@ if (!is_array($seats) || count($seats) === 0) {
 }
 
 if (count($seats) > MAX_SEATS_PER_NIA) {
-    jsonResponse(['message' => 'No pots reservar més de 4 seients.'], 422);
+    jsonResponse(['message' => 'No pots reservar més de 5 seients.'], 422);
 }
 
 $pdo = db();
@@ -39,7 +39,7 @@ try {
     $alreadyReserved = (int) $countStmt->fetch()['total'];
 
     if ($alreadyReserved + count($seats) > MAX_SEATS_PER_NIA) {
-        throw new RuntimeException('Aquest NIA supera el màxim de 4 seients.');
+        throw new RuntimeException('Aquest NIA supera el màxim de 5 seients.');
     }
 
     $insertStmt = $pdo->prepare(

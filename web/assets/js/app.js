@@ -88,10 +88,10 @@ async function handleNiaSubmit(event) {
     state.studentEmail = studentEmail;
     state.alreadyReserved = data.reservedCount;
 
-    if (state.alreadyReserved >= 4) {
+    if (state.alreadyReserved >= 5) {
       showMessage(
         selectors.niaMessage,
-        'Aquest NIA ja té 4 seients reservats. No es permet modificar la reserva.',
+        'Aquest NIA ja té 5 seients reservats. No es permet modificar la reserva.',
         'error',
       );
       return;
@@ -206,10 +206,10 @@ function toggleSeat(seat) {
     state.selectedSeats = state.selectedSeats.filter(
       selected => selected.id !== seat.id,
     );
-  } else if (state.selectedSeats.length + state.alreadyReserved < 4) {
+  } else if (state.selectedSeats.length + state.alreadyReserved < 5) {
     state.selectedSeats.push(seat);
   } else {
-    showMessage(selectors.seatMessage, 'Màxim 4 seients per NIA.', 'error');
+    showMessage(selectors.seatMessage, 'Màxim 5 seients per NIA.', 'error');
     return;
   }
 
@@ -371,7 +371,7 @@ function renderSeatPills(seats) {
     seat => `<span class="pill">Fila ${seat.row} · Butaca ${seat.seat}</span>`,
   );
   const emptyPills = Array.from(
-    { length: Math.max(0, 4 - seats.length) },
+    { length: Math.max(0, 5 - seats.length) },
     (_, index) =>
       `<span class="pill empty-pill" aria-label="Butaca pendent ${index + 1}"></span>`,
   );

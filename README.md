@@ -89,7 +89,7 @@ E-20-8
 
 ## Notes
 
-- Cada NIA pot reservar màxim 4 seients.
+- Cada NIA pot reservar màxim 5 seients.
 - La base de dades impedeix que dues persones reservin el mateix seient.
 - Les zones del mapa s’han simplificat en A, B, C, D i E.
 # graduacio_aixovall
